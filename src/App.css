@@ -1,0 +1,70 @@
+
+          /* Carousel animation */
+          @keyframes slide {
+                0% {
+                  transform: translateX(0%);
+                }
+                20% {
+                  transform: translateX(0%);
+                }
+                25% {
+                  transform: translateX(-100%);
+                }
+                45% {
+                  transform: translateX(-100%);
+                }
+                50% {
+                  transform: translateX(-200%);
+                }
+                70% {
+                  transform: translateX(-200%);
+                }
+                75% {
+                  transform: translateX(0%);
+                }
+                100% {
+                  transform: translateX(0%);
+                }
+              }
+          
+              .carousel {
+                display: flex;
+                animation: slide 12s infinite;
+              }
+          
+              .carousel-item {
+                flex: 0 0 100%;
+              }
+          
+          
+              /* ====== */
+              @keyframes bellSwing {
+                0% { transform: rotate(0deg); }
+             
+                50% { transform: rotate(15deg); }
+               
+                100% { transform: rotate(0deg); }
+            }
+          
+            .bell-animation {
+                animation: bellSwing 0.5s ease-in-out infinite;
+            }
+          
+            
+@keyframes marquee {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+
+.marquee-container {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.marquee {
+  display: inline-block;
+  white-space: nowrap;
+  animation: marquee 15s linear infinite;
+  padding-right: 100%;
+}
