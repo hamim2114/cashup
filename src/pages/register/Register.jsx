@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import {
@@ -18,15 +18,15 @@ function Register() {
 
   const [formData, setFormData] = useState({
     phone_number: "",
-    first_name: "",
-    last_name: "",
+    name: "",
     date_of_birth: "",
     gender: "M",
     password: "",
-    password2: "",
+    confirm_password: "",
   });
-
   const [errorMessages, setErrorMessages] = useState({}); // Store error messages
+
+  const navigate = useNavigate()
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -36,24 +36,23 @@ function Register() {
   const regMutation = useMutation({
     mutationFn: (input) => apiReq.post('/api/register/', input),
     onSuccess: (res) => {
-      toast.success(res.data.message);
+      console.log(res)
+      toast.success("Registration Successfull");
       setErrorMessages({});
       setFormData({
         phone_number: "",
-        first_name: "",
-        last_name: "",
+        name: "",
         date_of_birth: "",
         password: "",
-        password2: "",
+        confirm_password: "",
       });
+      navigate('/login')
     },
     onError: (err) => {
       console.log("Register Error:", err);
+      setErrorMessages(err);
       if (err) {
         toast.error(err.non_field_errors[0]);
-      }
-      if (err) {
-        setErrorMessages(err);
       } else {
         toast.error("An unknown error occurred.");
       }
@@ -62,8 +61,8 @@ function Register() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (formData.password !== formData.password2) {
-      setErrorMessages((prev) => ({ ...prev, password2: "Passwords do not match" }));
+    if (formData.password !== formData.confirm_password) {
+      setErrorMessages((prev) => ({ ...prev, confirm_password: "Passwords do not match" }));
       return;
     }
     if (formData.password.length < 6) {
@@ -91,27 +90,17 @@ function Register() {
             error={!!errorMessages.phone_number}
             helperText={errorMessages.phone_number?.[0] || ""}
           />
+
           <TextField
             fullWidth
             margin="normal"
-            label="First Name"
-            name="first_name"
-            value={formData.first_name}
+            label="Full Name"
+            name="name"
+            value={formData.name}
             onChange={handleChange}
             required
-            error={!!errorMessages.first_name}
-            helperText={errorMessages.first_name?.[0] || ""}
-          />
-          <TextField
-            fullWidth
-            margin="normal"
-            label="Last Name"
-            name="last_name"
-            value={formData.last_name}
-            onChange={handleChange}
-            required
-            error={!!errorMessages.last_name}
-            helperText={errorMessages.last_name?.[0] || ""}
+            error={!!errorMessages.name}
+            helperText={errorMessages.name?.[0] || ""}
           />
 
           <TextField
@@ -137,55 +126,61 @@ function Register() {
 
           </FormControl>
 
-          <TextField
+          {/* <TextField
             fullWidth
             margin="normal"
             label="Refer Code (if available)"
             name="referCode"
             value={formData.referCode}
             onChange={handleChange}
-          />
+          /> */}
           <TextField
-            slotProps={{
-              input: {
-                endAdornment: (
-                  <IconButton onClick={() => setShowPassword(!showPassword)}>
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                ),
-              },
-            }}
+            // slotProps={{
+            //   input: {
+            //     endAdornment: (
+            //       <IconButton onClick={() => setShowPassword(!showPassword)}>
+            //         {showPassword ? <VisibilityOff /> : <Visibility />}
+            //       </IconButton>
+            //     ),
+            //   },
+            // }}
             fullWidth
             margin="normal"
-            type={showPassword ? 'text' : 'password'}
-            label="Password"
+            type='number'
+            // type={showPassword ? 'number' : 'password'}
+            label="Pin Code"
             name="password"
             value={formData.password}
             onChange={handleChange}
             required
             error={!!errorMessages.password}
             helperText={errorMessages.password?.[0] || ""}
+          // inputProps={{
+          //   inputMode: "numeric", // Show numeric keyboard on mobile devices
+          //   pattern: "[0-9]*", // Restrict input to numbers only
+          // }}
           />
           <TextField
-            slotProps={{
-              input: {
-                endAdornment: (
-                  <IconButton onClick={() => setShowPassword(!showPassword)}>
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                ),
-              },
-            }}
+            // slotProps={{
+            //   input: {
+            //     endAdornment: (
+            //       <IconButton onClick={() => setShowPassword(!showPassword)}>
+            //         {showPassword ? <VisibilityOff /> : <Visibility />}
+            //       </IconButton>
+            //     ),
+            //   },
+            // }}
             fullWidth
             margin="normal"
-            type={showPassword ? 'text' : 'password'}
-            label="Confirm Password"
-            name="password2"
-            value={formData.password2}
+            type='number'
+            // type={showPassword ? 'number' : 'password'}
+            label="Confirm Pin Code"
+            name="confirm_password"
+            value={formData.confirm_password}
             onChange={handleChange}
             required
-            error={!!errorMessages.password2}
-            helperText={errorMessages.password2 || ""}
+            error={!!errorMessages.confirm_password}
+            helperText={errorMessages.confirm_password || ""}
           />
 
           <CButton loading={regMutation.isPending} type="submit" variant="contained" color="primary" fullWidth sx={{ mt: 2 }}>

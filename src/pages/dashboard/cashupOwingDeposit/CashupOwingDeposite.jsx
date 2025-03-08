@@ -11,31 +11,28 @@ import internetImg from "../../../assets/paybill/internet.png";
 import insuranceImg from "../../../assets/paybill/healthcare.png";
 import cableTv from "../../../assets/paybill/cable-tv.png";
 import CDialog from "../../../common/CDialog";
-import CashupBalance from "./cashupBalance/CashupBalance";
+import CashupOwingBalance from "./cashupOwingBalance/CashupOwingBalance";
 import apiReq from "../../../utils/axiosInstance";
 import { useQuery } from "@tanstack/react-query";
-import CashupWithdrawReq from "./cashupWithdrawReq/CashupWithdrawReq";
-import CompoundingWithdraw from "./compoundingWithdraw/CompoundingWithdraw";
 
 const cashupDeposite = [
-  { id: 1, title: "ক্যাশআপ ব্যালেন্স", img: educationImg, type: "balance" },
+  { id: 1, title: "ওউইং/ঋণ ব্যালেন্স", img: educationImg, type: "balance" },
   { id: 2, title: "দৈনিক লাভ", img: electricityImg, type: "daily_profit" },
   { id: 3, title: "মাসিক লাভ", img: gasImg, type: "monthly_profit" },
   { id: 4, title: "চক্রবৃদ্ধি লাভ", img: tapImg, type: "compounding_profit" },
   { id: 5, title: "দৈনিক চক্রবৃদ্ধি", img: vatImg, type: "daily_compounding_profit" },
   { id: 6, title: "মাসিক চক্রবৃদ্ধি", img: internetImg, type: "monthly_compounding_profit" },
   { id: 8, title: "পণ্যের লাভ", img: cableTv, type: "product_profit" },
-  { id: 7, title: "ক্যাশআপ উইথড্র", img: insuranceImg, type: "cashup_withdraw" },
-  { id: 8, title: "চক্রবৃদ্ধি উইথড্র", img: insuranceImg, type: "compounding_withdraw" },
+  { id: 7, title: "উইথড্র", img: insuranceImg, type: "withdraw" },
 ];
 
-const CashupDeposite = () => {
+const CashupOwingDeposite = () => {
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
 
   const { data: cashupBalance } = useQuery({
-    queryKey: ['cashupDeposit'],
-    queryFn: () => apiReq.get('/api/cashup-deposit/',)
+    queryKey: ['cashupOwingDeposit'],
+    queryFn: () => apiReq.get('/api/cashup-owing-deposit/',)
   })
   console.log(cashupBalance)
 
@@ -54,7 +51,7 @@ const CashupDeposite = () => {
   return (
     <Box sx={{ bgcolor: "white", py: 5, px: 2 }}>
       <Typography variant="h6" fontWeight="bold" mb={3}>
-        ক্যাশআপ ডিপোজিট
+        ক্যাশআপ ডিপোজিট (ওউইং / ঋণ)
       </Typography>
 
       {/* Grid Layout */}
@@ -69,8 +66,8 @@ const CashupDeposite = () => {
                 p: 2,
                 cursor: "pointer",
                 boxShadow: 3,
-                border: '1px solid green',
                 borderRadius: 2,
+                border: '1px solid coral',
                 "&:hover": { boxShadow: 6 },
               }}
               onClick={() => handleOpen(service)}
@@ -87,14 +84,14 @@ const CashupDeposite = () => {
       {/* Dialog Component */}
       <CDialog open={openDialog} onClose={handleClose} title={selectedItem?.title}>
         <Avatar src={selectedItem?.img} sx={{ width: 80, borderRadius: 0, height: 80, mb: 2, mx: "auto" }} alt={selectedItem?.title} />
-        {selectedItem?.type === "balance" && <CashupBalance />}
+        {selectedItem?.type === "balance" && <CashupOwingBalance />}
         {
           [
-            { label: 'Daily Profit', value: cashupBalance?.data[0]?.daily_profit, key: 'daily_profit' },
-            { label: 'Monthly Profit', value: cashupBalance?.data[0]?.monthly_profit, key: 'monthly_profit' },
-            { label: 'Compounding Profit', value: cashupBalance?.data[0]?.compounding_profit, key: 'compounding_profit' },
-            { label: 'Daily Compounding Profit', value: cashupBalance?.data[0]?.daily_compounding_profit, key: 'daily_compounding_profit' },
-            { label: 'Monthly Compounding Profit', value: cashupBalance?.data[0]?.monthly_compounding_profit, key: 'monthly_compounding_profit' },
+            { label: 'Daily Profit', value: cashupBalance?.data[0]?.daily_profit ?? '0.00', key: 'daily_profit' },
+            { label: 'Monthly Profit', value: cashupBalance?.data[0]?.monthly_profit ?? '0.00', key: 'monthly_profit' },
+            { label: 'Compounding Profit', value: cashupBalance?.data[0]?.compounding_profit ?? '0.00', key: 'compounding_profit' },
+            { label: 'Daily Compounding Profit', value: cashupBalance?.data[0]?.daily_compounding_profit ?? '0.00', key: 'daily_compounding_profit' },
+            { label: 'Monthly Compounding Profit', value: cashupBalance?.data[0]?.monthly_compounding_profit ?? '0.00', key: 'monthly_compounding_profit' },
             { label: 'Product Profit', value: cashupBalance?.data[0]?.product_profit, key: 'product_profit' },
           ]
             ?.filter((item) => selectedItem?.type == item.key)
@@ -114,11 +111,22 @@ const CashupDeposite = () => {
             ))
         }
 
-        {selectedItem?.type === "cashup_withdraw" && <CashupWithdrawReq cashupBalance={cashupBalance} />}
-        {selectedItem?.type === "compounding_withdraw" && <CompoundingWithdraw cashupBalance={cashupBalance} />}
+        {selectedItem?.type === "withdraw" &&
+          <Box>
+            <Typography
+              sx={{ textAlign: 'center', mb: 1, fontSize: '25px', color: 'purple' }}
+            >
+              WithDraw : {' '}
+              <span style={{ textAlign: 'center', fontSize: '25px', color: 'green' }}>
+                {cashupBalance?.data[0]?.withdraw} BDT
+              </span>
+            </Typography>
+            <Typography sx={{ textAlign: 'center', color: 'coral', mt: 2 }}>you must have to pay your cash in main balance</Typography>
+          </Box>
+        }
       </CDialog>
     </Box>
   );
 };
 
-export default CashupDeposite;
+export default CashupOwingDeposite;

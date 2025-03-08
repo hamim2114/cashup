@@ -1,10 +1,12 @@
 import axios from "axios";
 import { refreshToken } from './auth';
 
+// const baseURL = window.location.hostname === 'localhost'
+//   ? 'http://127.0.0.1:8000/'
+//   : 'https://test-app-project.onrender.com/';
 
-// Environment-based API URL
-const baseURL =
-  import.meta.env.VITE_API_URL || "https://test-app-project.onrender.com/";
+// const baseURL = "http://127.0.0.1:8000/";
+const baseURL = "https://test-app-project.onrender.com/";
 
 // Create an Axios instance
 const apiReq = axios.create({
@@ -55,70 +57,84 @@ apiReq.interceptors.response.use(
   }
 );
 
+
+
 export default apiReq;
 
 
+// import axios from "axios";
+// import { refreshToken } from "./auth"; // Import refresh logic
 
+// const baseURL = "http://127.0.0.1:8000/";
+// // const baseURL = "https://test-app-project.onrender.com/";
+
+// // Create an Axios instance
 // const apiReq = axios.create({
-//   baseURL: baseURL,
-//   headers: {
-//     "Content-Type": "application/json",
-//   },
+//   baseURL,
+//   withCredentials: true, // Allow sending cookies if backend supports it
 // });
 
+// // Public routes that don't require authentication
+// const publicRoutes = ["/login", "/register", "/forgot-password"];
+
+// // Function to get tokens from localStorage
+// const getAccessToken = () => localStorage.getItem("access_token");
+// const getRefreshToken = () => localStorage.getItem("refresh_token");
+
+// // 🔹 Request Interceptor: Attach Access Token to Requests
 // apiReq.interceptors.request.use(
-//   config => {
-//     const access_token = localStorage.getItem("access_token");
-//     if (access_token) {
-//       config.headers["Authorization"] = `Bearer ${access_token}`;
+//   (config) => {
+//     const token = getAccessToken();
+//     if (token) {
+//       config.headers.Authorization = `Bearer ${token}`;
 //     }
 //     return config;
 //   },
-//   error => {
-//     return Promise.reject(error);
-//   }
+//   (error) => Promise.reject(error)
 // );
 
+// // 🔹 Response Interceptor: Handle Expired Tokens
 // apiReq.interceptors.response.use(
-//   response => response,
-//   async error => {
+//   (response) => response, // Return response if no error
+//   async (error) => {
+//     if (!error.response) {
+//       console.error("No response received from server:", error.request);
+//       return Promise.reject(error);
+//     }
+
 //     const originalRequest = error.config;
-//     if (error.response.status === 401 && !originalRequest._retry) {
-//       originalRequest._retry = true;
-//       const newAccessToken = await refreshToken();
-//       if (newAccessToken) {
-//         originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
-//         return apiReq(originalRequest);
+//     const { status } = error.response;
+
+//     // If token expired (401 Unauthorized) & not retrying already
+//     if (status === 401 && !originalRequest._retry) {
+//       originalRequest._retry = true; // Prevent infinite loops
+
+//       try {
+//         // Refresh the access token
+//         const newAccessToken = await refreshToken();
+//         if (newAccessToken) {
+//           // Update token and retry the failed request
+//           originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+//           return apiReq(originalRequest); // Retry request with new token
+//         }
+//       } catch (refreshError) {
+//         console.error("Refresh token failed:", refreshError);
+//         localStorage.removeItem("access_token");
+//         localStorage.removeItem("refresh_token");
+
+//         // Redirect only if user is on a protected route
+//         if (!publicRoutes.includes(window.location.pathname)) {
+//           window.location.href = "/login";
+//         }
 //       }
 //     }
-//     return Promise.reject(error);
+
+//     return Promise.reject(error.response.data);
 //   }
 // );
 
+// export default apiReq;
 
-// const axiosInstance = axios.create({
-//   baseURL: baseURL,
-//   headers: {
-//     "Content-Type": "application/json",
-//   },
-// });
-
-
-// axiosInstance.interceptors.request.use(
-//   config => {
-//     const access_token = localStorage.getItem("access_token");
-//     if (access_token) {
-//       config.headers["Authorization"] = `Bearer ${access_token}`;
-//     }
-//     // console.log(config.headers);
-//     return config;
-//   },
-//   error => {
-//     return Promise.reject(error);
-//   }
-// );
-
-// export default axiosInstance;
 
 
 

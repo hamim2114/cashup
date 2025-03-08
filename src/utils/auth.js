@@ -1,31 +1,23 @@
-// auth.js
-// import axiosInstance from './axiosInstance';
+import axios from "axios";
 
-// export const validateToken = async () => {
-//   try {
-//     const response = await axiosInstance.get('/auth/refresh/');
-//     return response.data;
-//   } catch (error) {
-//     console.error('Token validation failed:', error);
-//     return null;
-//   }
-// };
-
-
-
+const baseURL = "http://127.0.0.1:8000/";
 
 export const refreshToken = async () => {
   try {
-    const refresh_token = localStorage.getItem('refresh_token');
-    const response = await axiosInstance.post('auth/refresh/', {
-      refresh: refresh_token,
+    const refresh = localStorage.getItem("refresh_token"); // Get refresh token
+
+    if (!refresh) throw new Error("No refresh token found");
+
+    const response = await axios.post(`${baseURL}auth/refresh/`, {
+      refresh, // Send refresh token to get new access token
     });
-    localStorage.setItem('access_token', response.data.access);
-    localStorage.setItem('refresh_token', response.data.refresh);
-    console.log(response.data)
-    return response.data.access;
+
+    const newAccessToken = response.data.access;
+    localStorage.setItem("access_token", newAccessToken); // Save new token
+
+    return newAccessToken; // Return new token
   } catch (error) {
-    console.error('Token refresh failed:', error);
+    console.error("Failed to refresh token:", error);
     return null;
   }
 };

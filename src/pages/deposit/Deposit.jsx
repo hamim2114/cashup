@@ -60,10 +60,10 @@ function Deposit() {
         <AddDeposit method={depositMethod} closeDialog={() => setDepositDialogOpen(false)} />
       </CDialog>
 
-      <main className="my-10 mx-5 flex flex-col gap-14">
+      <main className="py-10 px-5 flex flex-col bg-[#1C232B] gap-14">
         {/* e-payments */}
         <section>
-          <h1 className="flex items-center gap-3 text-xl font-bold mb-5">
+          <h1 className="flex text-[#A2AEB5] items-center gap-3 text-xl font-bold mb-5">
             <img className="w-10 h-10" src={cardImg} alt="" /> E-payments
           </h1>
           <div className="space-y-4">
@@ -89,7 +89,7 @@ function Deposit() {
         {/* bank cards */}
         <section className=" mx-2 ">
           <div className="mb-5">
-            <h1 className="flex items-center gap-3 text-xl font-bold">
+            <h1 className="flex text-[#A2AEB5] items-center gap-3 text-xl font-bold">
               {" "}
               <img className="w-10 h-10" src={cardImg} alt="" /> Bank Cards
             </h1>
@@ -110,7 +110,7 @@ function Deposit() {
         {/* Net Banking */}
         <section className=" mx-2">
           <div className="mb-5">
-            <h1 className="flex items-center gap-3 text-xl font-bold">
+            <h1 className="flex text-[#A2AEB5] items-center gap-3 text-xl font-bold">
               {" "}
               <img className="w-10 h-10" src={cardImg} alt="" /> Net Banking
             </h1>
@@ -178,7 +178,7 @@ function Deposit() {
         {/* Cryptocurrencies */}
         <section className=" mx-2">
           <div className="mb-5">
-            <h1 className="flex items-center gap-3 text-xl font-bold">
+            <h1 className="flex text-[#A2AEB5] items-center gap-3 text-xl font-bold">
               {" "}
               <img className="w-10 h-10" src={cryptoImg} alt="" />{" "}
               Cryptocurrencies

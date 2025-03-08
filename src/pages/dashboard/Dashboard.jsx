@@ -38,6 +38,7 @@ import others from "../../assets/paybill/other.png";
 import CashupDeposite from "./cashupDeposit/CashupDeposite";
 import Header from "../../base/Header";
 import Footer from "../../base/Footer";
+import CashupOwingDeposite from "./cashupOwingDeposit/CashupOwingDeposite";
 
 
 function Dashboard() {
@@ -317,32 +318,7 @@ function Dashboard() {
         <CashupDeposite />
 
         {/* নগদ জমা (ঋণ) */}
-        <section className="bg-white mb-10 py-5 -mt-5">
-          <div className="mx-2">
-            <h1 className="font-bold text-black text-lg mb-3">
-              ক্যাশআপ ডিপোজিট (ওউইং)
-            </h1>
-            <div className="grid grid-cols-4 gap-5">
-              {cashupDeposite.map((service) => (
-                <div
-                  key={service.id}
-                  className="stat flex flex-col items-center justify-center"
-                >
-                  <div className="stat-figure text-secondary mb-2">
-                    <div className="avatar">
-                      <div className="w-10">
-                        <img src={service.img} />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="stat-title text-black text-center text-xs font-medium">
-                    {service.title}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+        <CashupOwingDeposite />
         {/*  */}
 
         <section className="mx-2">

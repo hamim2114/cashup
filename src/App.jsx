@@ -13,10 +13,15 @@ import AdminDash from './components/AdminDash';
 import UpdateStatus from './components/UpdateStatus';
 import UpdateWithdraw from './components/UpdateWithdraw';
 import Product from './pages/products/Product';
-import OrderDetails from './components/OrderDetails';
 import useAuth from "./hook/useAuth";
 import Login from "./pages/login/Login";
 import Dashboard from "./pages/dashboard/Dashboard";
+import { Container } from "@mui/material";
+import OrderCart from "./pages/orderCart/OrderCart";
+import OrderHistory from "./pages/orderHistory/OrderHistory";
+import CashupWithdrawHistory from "./pages/cashupWithdrawHistory/Index";
+import CompoundingWithdrawHistory from "./pages/compoundingWithdrawHistory/Index";
+import MainBalanceWithdrawHistory from "./pages/mainBalanceWithdrawHistory/Index";
 
 const PrivateRoute = () => {
   const { token } = useAuth();
@@ -29,34 +34,40 @@ function App() {
 
 
   return (
-    <Routes>
-      {/* Public Routes */}
-      <Route path="/" element={token ? <Navigate to='/dashboard' /> : <Login />} />
-      <Route path="/login" element={token ? <Navigate to='/dashboard' /> : <Login />} />
-      <Route path="register" element={token ? <Navigate to='/dashboard' /> : <Register />} />
-      <Route path="help" element={<Help />} />
+    <Container sx={{ px: 0 }} maxWidth='sm'>
+      <Routes>
+        {/* Public Routes */}
+        <Route path="/" element={token ? <Navigate to='/dashboard' /> : <Login />} />
+        <Route path="/login" element={token ? <Navigate to='/dashboard' /> : <Login />} />
+        <Route path="register" element={token ? <Navigate to='/dashboard' /> : <Register />} />
+        <Route path="help" element={<Help />} />
 
-      {/* Protected Routes */}
-      <Route element={<PrivateRoute />}>
-        <Route path="product" element={<Product />} />
-        <Route path="order-details" element={<OrderDetails />} />
-        <Route path="package" element={<Package />} />
-        <Route path="dash" element={<Dashboard />} />
-        <Route path="cashout" element={<Cashout />} />
-        <Route path="deposit" element={<Deposit />} />
-        <Route path="refer" element={<Refer />} />
-        <Route path="history" element={<Trx />} />
-        <Route path="profile" element={<Profile />} />
-        <Route path="task" element={<Task />} />
-        <Route path="dashboard" element={<Dashboard />} />
-        <Route path="admin_dashboard" element={<AdminDash />} />
-        <Route path="update_status/:pk" element={<UpdateStatus />} />
-        <Route path="update_withdraw_status/:pk" element={<UpdateWithdraw />} />
-      </Route>
+        {/* Protected Routes */}
+        <Route element={<PrivateRoute />}>
+          <Route path="product" element={<Product />} />
+          <Route path="order-cart" element={<OrderCart />} />
+          <Route path="order-history" element={<OrderHistory />} />
+          <Route path="cashup-withdraw-history" element={<CashupWithdrawHistory />} />
+          <Route path="compounding-withdraw-history" element={<CompoundingWithdrawHistory />} />
+          <Route path="main-balance-withdraw-history" element={<MainBalanceWithdrawHistory />} />
+          <Route path="package" element={<Package />} />
+          <Route path="dash" element={<Dashboard />} />
+          <Route path="cashout" element={<Cashout />} />
+          <Route path="deposit" element={<Deposit />} />
+          <Route path="refer" element={<Refer />} />
+          <Route path="history" element={<Trx />} />
+          <Route path="profile" element={<Profile />} />
+          <Route path="task" element={<Task />} />
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="admin_dashboard" element={<AdminDash />} />
+          <Route path="update_status/:pk" element={<UpdateStatus />} />
+          <Route path="update_withdraw_status/:pk" element={<UpdateWithdraw />} />
+        </Route>
 
-      {/* Catch-all 404 */}
-      <Route path="*" element={<div>Not Found</div>} />
-    </Routes>
+        {/* Catch-all 404 */}
+        <Route path="*" element={<div>Not Found</div>} />
+      </Routes>
+    </Container>
   );
 }
 

@@ -18,7 +18,10 @@ const AuthProvider = ({ children }) => {
     token,
     setToken,
     isAuthenticated: Boolean(token),
-    logout: () => setToken(null),
+    logout: () => {
+      setToken(null)
+      console.log('clicked')
+    },
   };
 
   return (

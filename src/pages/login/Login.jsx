@@ -30,7 +30,7 @@ function Login() {
     mutationFn: (input) => apiReq.post('/api/login/', input),
     onSuccess: (res) => {
       toast.success("Login successful");
-      setToken(res.data.access);
+      setToken(res.data.tokens.access);
     },
     onError: (err) => {
       console.log('login err', err)
