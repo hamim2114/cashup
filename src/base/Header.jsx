@@ -1,4 +1,4 @@
-import { Avatar, Button, Stack, Typography } from "@mui/material";
+import { Avatar, Button, FormControl, MenuItem, Select, Stack, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import useUser from "../hook/useUser";
@@ -7,14 +7,23 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import CDialog from "../common/CDialog";
 import MainBalanceWithdraw from "../components/MainBalanceWithdraw";
+import { useTranslation } from 'react-i18next';
 
 function Header() {
   const [mainBalanceDialogOpen, setMainBalanceDialogOpen] = useState(false)
   const [withdrawReqDialogOpen, setWithdrawReqDialogOpen] = useState(false)
 
+  const { t, i18n } = useTranslation('dashboard');
+
   const { user } = useUser();
 
-  const { data: cashupOwingDeposit, isLoading } = useQuery({
+  const changeLanguage = (lng) => {
+    const language = lng.target.value;
+
+    i18n.changeLanguage(language); // Change language
+  };
+
+  const { data: cashupOwingDeposit } = useQuery({
     queryKey: ['cashupOwingDeposit'],
     queryFn: () => apiReq.get('/api/cashup-owing-deposit/')
   })
@@ -42,7 +51,13 @@ function Header() {
               </div>
             </Stack>
           </Link>
-          <div>
+          <Stack direction='row' alignItems='center' gap={2}>
+
+            <select value={i18n.language} onChange={changeLanguage}
+              className="rounded-sm">
+              <option value="bn">Bangla</option>
+              <option value="en">English</option>
+            </select>
             <Link
               to="/deposit"
             >
@@ -50,7 +65,7 @@ function Header() {
                 Deposit
               </Button>
             </Link>
-          </div>
+          </Stack>
         </div>
         <div className="flex justify-center ">
           {/* <details className="dropdown">

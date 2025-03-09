@@ -67,7 +67,7 @@ const ProductCard = ({ product }) => {
             ৳ {product?.discount_rate}
           </Typography>
         </Box>
-        <Typography color="textSecondary" fontSize={14} mb={2}>
+        <Typography sx={{ color: 'purple' }} fontSize={14} mb={2}>
           Member: ৳ {product.members_price}
         </Typography>
 

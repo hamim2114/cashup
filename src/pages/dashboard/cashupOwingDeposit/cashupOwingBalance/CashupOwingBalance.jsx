@@ -57,9 +57,9 @@ const CashupOwingBalance = () => {
         {user?.main_balance}</span> BDT</Typography>
       <Typography sx={{ mb: 6, fontSize: '14px', color: '#fff', bgcolor: 'coral', px: 1, borderRadius: '4px', width: 'fit-content' }}>Requested Owing Amount : <span style={{ fontWeight: 'bold' }}>
         {cashupBalance?.data[0]?.requested_cashup_owing_main_balance ?? '0.00'}</span> BDT</Typography>
-      <Typography sx={{ mb: 1, fontSize: '14px', color: 'gray' }}>মিনিমাম টাকা পরিমাণ ১০০ টাকা</Typography>
-      <TextField error={Boolean(errMsg.amount)} helperText={errMsg.amount} value={amount} onChange={handleInput} sx={{ mb: 2 }} label="টাকা পরিমাণ" type='number' fullWidth />
-      <CButton loading={mutation.isPending} style={{ width: '100%' }} onClick={handleSave} variant="contained">রিকুয়েস্ট করুন</CButton>
+      <Typography sx={{ mb: 1, fontSize: '14px', color: 'gray' }}>minimum amount 100 BDT</Typography>
+      <TextField error={Boolean(errMsg.amount)} helperText={errMsg.amount} value={amount} onChange={handleInput} sx={{ mb: 2 }} label="Amount" type='number' fullWidth />
+      <CButton loading={mutation.isPending} style={{ width: '100%' }} onClick={handleSave} variant="contained">Make Request</CButton>
     </Box>
   )
 }

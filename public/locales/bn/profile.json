@@ -1,0 +1,18 @@
+{
+  "balance_inquiry": "ব্যালান্স অনুসন্ধান",
+  "mini_statement": "মিনি স্টেটমেন্ট",
+  "transaction_limit": "লেনদেন সীমা",
+  "service_charge": "সেবা চার্জ",
+  "my_qr": "আমার কিউআর",
+  "store_location": "স্টোরের অবস্থান",
+  "order_history": "অর্ডার হিস্টোরি",
+  "main_balance_deposit_history": "মেইন ব্যালেন্স জমার ইতিহাস",
+  "cashup_owing_deposit_history": "ক্যাশআপ পাওনা জমার ইতিহাস",
+  "main_balance_withdraw_history": "মেইন ব্যালেন্স উইথড্র হিস্টোরি",
+  "cashup_withdraw_history": "ক্যাশআপ উইথড্র হিস্টোরি",
+  "compounding_withdraw_history": "চক্রবৃদ্ধি উইথড্র হিস্টোরি",
+  "about_us": "আমাদের সম্পর্কে",
+  "contact": "যোগাযোগ",
+  "complain": "অভিযোগ/প্রতিক্রিয়া",
+  "logout": "লগআউট"
+}

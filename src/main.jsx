@@ -10,6 +10,8 @@ import AuthProvider from "./context/AuthProvider";
 import { ThemeProvider } from "@emotion/react";
 import { theme } from "./theme";
 import UserProvider from "./context/UserProvider";
+import './i18n'
+import { CssBaseline } from "@mui/material";
 
 
 const queryClient = new QueryClient();
@@ -21,6 +23,7 @@ createRoot(document.getElementById("root")).render(
         <AuthProvider>
           <UserProvider>
             <ThemeProvider theme={theme}>
+              <CssBaseline />
               <App />
             </ThemeProvider>
           </UserProvider>

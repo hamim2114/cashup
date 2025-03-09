@@ -4,7 +4,7 @@ import toast from 'react-hot-toast';
 import { FaArrowLeft } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
 import apiReq from '../../utils/axiosInstance';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import CButton from '../../common/CButton';
 
 const Checkout = ({ onClose }) => {
@@ -26,10 +26,12 @@ const Checkout = ({ onClose }) => {
 
   const navigate = useNavigate()
 
+  const queryClient = useQueryClient()
+
   const submitMutation = useMutation({
     mutationFn: (data) => apiReq.post('/api/checkout-details/', data),
     onSuccess: (res) => {
-      console.log(res);
+      queryClient.invalidateQueries(['user'])
       toast.success("Order placed successfully!");
       navigate('/order-history')
       onClose();

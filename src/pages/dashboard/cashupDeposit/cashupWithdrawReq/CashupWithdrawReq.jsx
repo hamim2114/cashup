@@ -46,9 +46,9 @@ const CashupWithdrawReq = ({ cashupBalance }) => {
       </Typography>
       <Typography sx={{ color: 'green' }}>Cashup Balance : {cashupBalance?.data[0]?.cashup_main_balance ?? "0.00"} BDT</Typography>
 
-      <Typography variant='body2' sx={{ mb: 2, fontSize: '14px', color: 'gray' }}>মিনিমাম উইথড্র পরিমাণ ১০০ টাকা</Typography>
+      <Typography variant='body2' sx={{ mb: 2, fontSize: '14px', color: 'gray' }}>minimum amount 100 BDT</Typography>
 
-      <TextField value={amount} onChange={e => setAmount(e.target.value)} sx={{ mb: 2 }} fullWidth label='Withdraw Request' />
+      <TextField value={amount} onChange={e => setAmount(e.target.value)} sx={{ mb: 2 }} fullWidth label='Amount' />
       <CButton loading={mutation.isPending} onClick={handleRequest} variant='contained' style={{ width: '100%' }}>
         Request for Withdraw
       </CButton>

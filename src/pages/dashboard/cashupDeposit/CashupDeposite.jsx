@@ -16,28 +16,29 @@ import apiReq from "../../../utils/axiosInstance";
 import { useQuery } from "@tanstack/react-query";
 import CashupWithdrawReq from "./cashupWithdrawReq/CashupWithdrawReq";
 import CompoundingWithdraw from "./compoundingWithdraw/CompoundingWithdraw";
+import { useTranslation } from "react-i18next";
 
 const cashupDeposite = [
-  { id: 1, title: "ক্যাশআপ ব্যালেন্স", img: educationImg, type: "balance" },
-  { id: 2, title: "দৈনিক লাভ", img: electricityImg, type: "daily_profit" },
-  { id: 3, title: "মাসিক লাভ", img: gasImg, type: "monthly_profit" },
-  { id: 4, title: "চক্রবৃদ্ধি লাভ", img: tapImg, type: "compounding_profit" },
-  { id: 5, title: "দৈনিক চক্রবৃদ্ধি", img: vatImg, type: "daily_compounding_profit" },
-  { id: 6, title: "মাসিক চক্রবৃদ্ধি", img: internetImg, type: "monthly_compounding_profit" },
-  { id: 8, title: "পণ্যের লাভ", img: cableTv, type: "product_profit" },
-  { id: 7, title: "ক্যাশআপ উইথড্র", img: insuranceImg, type: "cashup_withdraw" },
-  { id: 8, title: "চক্রবৃদ্ধি উইথড্র", img: insuranceImg, type: "compounding_withdraw" },
+  { id: 1, titleKey: "cashup_balance", img: educationImg, type: "balance" },
+  { id: 2, titleKey: "daily_profit", img: electricityImg, type: "daily_profit" },
+  { id: 3, titleKey: "monthly_profit", img: gasImg, type: "monthly_profit" },
+  { id: 4, titleKey: "compound_profit", img: tapImg, type: "compounding_profit" },
+  { id: 5, titleKey: "daily_compound", img: vatImg, type: "daily_compounding_profit" },
+  { id: 6, titleKey: "monthly_compound", img: internetImg, type: "monthly_compounding_profit" },
+  { id: 7, titleKey: "product_profit", img: cableTv, type: "product_profit" },
+  { id: 8, titleKey: "cashup_withdraw", img: insuranceImg, type: "cashup_withdraw" },
+  { id: 9, titleKey: "compound_withdraw", img: insuranceImg, type: "compounding_withdraw" },
 ];
 
 const CashupDeposite = () => {
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
+  const { t } = useTranslation('dashboard');
 
   const { data: cashupBalance } = useQuery({
     queryKey: ['cashupDeposit'],
-    queryFn: () => apiReq.get('/api/cashup-deposit/',)
-  })
-  console.log(cashupBalance)
+    queryFn: () => apiReq.get('/api/cashup-deposit/'),
+  });
 
   // Open Dialog
   const handleOpen = (item) => {
@@ -48,13 +49,12 @@ const CashupDeposite = () => {
   // Close Dialog
   const handleClose = () => {
     setOpenDialog(false);
-    // setSelectedItem(null);
   };
 
   return (
     <Box sx={{ bgcolor: "white", py: 5, px: 2 }}>
       <Typography variant="h6" fontWeight="bold" mb={3}>
-        ক্যাশআপ ডিপোজিট
+        {t("cashup_deposit")} {/* Translate "ক্যাশআপ ডিপোজিট" */}
       </Typography>
 
       {/* Grid Layout */}
@@ -75,9 +75,9 @@ const CashupDeposite = () => {
               }}
               onClick={() => handleOpen(service)}
             >
-              <img src={service.img ?? ''} style={{ width: 50, height: 50, marginBottom: 1 }} alt={service.title} />
+              <img src={service.img ?? ''} style={{ width: 50, height: 50, marginBottom: 1 }} alt={t(service.titleKey)} />
               <Typography fontSize={14} fontWeight="bold" textAlign="center">
-                {service.title}
+                {t(service.titleKey)} {/* Translate title */}
               </Typography>
             </Card>
           </Grid>
@@ -85,17 +85,17 @@ const CashupDeposite = () => {
       </Grid>
 
       {/* Dialog Component */}
-      <CDialog open={openDialog} onClose={handleClose} title={selectedItem?.title}>
-        <Avatar src={selectedItem?.img} sx={{ width: 80, borderRadius: 0, height: 80, mb: 2, mx: "auto" }} alt={selectedItem?.title} />
+      <CDialog open={openDialog} onClose={handleClose} title={t(selectedItem?.titleKey)}>
+        <Avatar src={selectedItem?.img} sx={{ width: 80, borderRadius: 0, height: 80, mb: 2, mx: "auto" }} alt={t(selectedItem?.titleKey)} />
         {selectedItem?.type === "balance" && <CashupBalance />}
         {
           [
-            { label: 'Daily Profit', value: cashupBalance?.data[0]?.daily_profit, key: 'daily_profit' },
-            { label: 'Monthly Profit', value: cashupBalance?.data[0]?.monthly_profit, key: 'monthly_profit' },
-            { label: 'Compounding Profit', value: cashupBalance?.data[0]?.compounding_profit, key: 'compounding_profit' },
-            { label: 'Daily Compounding Profit', value: cashupBalance?.data[0]?.daily_compounding_profit, key: 'daily_compounding_profit' },
-            { label: 'Monthly Compounding Profit', value: cashupBalance?.data[0]?.monthly_compounding_profit, key: 'monthly_compounding_profit' },
-            { label: 'Product Profit', value: cashupBalance?.data[0]?.product_profit, key: 'product_profit' },
+            { labelKey: 'daily_profit', value: cashupBalance?.data[0]?.daily_profit, key: 'daily_profit' },
+            { labelKey: 'monthly_profit', value: cashupBalance?.data[0]?.monthly_profit, key: 'monthly_profit' },
+            { labelKey: 'compound_profit', value: cashupBalance?.data[0]?.compounding_profit, key: 'compounding_profit' },
+            { labelKey: 'daily_compound', value: cashupBalance?.data[0]?.daily_compounding_profit, key: 'daily_compounding_profit' },
+            { labelKey: 'monthly_compound', value: cashupBalance?.data[0]?.monthly_compounding_profit, key: 'monthly_compounding_profit' },
+            { labelKey: 'product_profit', value: cashupBalance?.data[0]?.product_profit, key: 'product_profit' },
           ]
             ?.filter((item) => selectedItem?.type == item.key)
             ?.map((item, id) => (
@@ -103,7 +103,7 @@ const CashupDeposite = () => {
                 <Typography
                   sx={{ textAlign: 'center', mb: 1, fontSize: '25px', color: 'purple' }}
                 >
-                  {item.label} :
+                  {t(item.labelKey)} : {/* Translate label */}
                 </Typography>
                 <Typography
                   sx={{ textAlign: 'center', mb: 4, fontSize: '25px', color: 'green' }}

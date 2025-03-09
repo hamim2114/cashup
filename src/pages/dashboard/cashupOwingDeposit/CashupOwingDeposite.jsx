@@ -14,16 +14,17 @@ import CDialog from "../../../common/CDialog";
 import CashupOwingBalance from "./cashupOwingBalance/CashupOwingBalance";
 import apiReq from "../../../utils/axiosInstance";
 import { useQuery } from "@tanstack/react-query";
+import { useTranslation } from "react-i18next";
 
 const cashupDeposite = [
-  { id: 1, title: "ওউইং/ঋণ ব্যালেন্স", img: educationImg, type: "balance" },
-  { id: 2, title: "দৈনিক লাভ", img: electricityImg, type: "daily_profit" },
-  { id: 3, title: "মাসিক লাভ", img: gasImg, type: "monthly_profit" },
-  { id: 4, title: "চক্রবৃদ্ধি লাভ", img: tapImg, type: "compounding_profit" },
-  { id: 5, title: "দৈনিক চক্রবৃদ্ধি", img: vatImg, type: "daily_compounding_profit" },
-  { id: 6, title: "মাসিক চক্রবৃদ্ধি", img: internetImg, type: "monthly_compounding_profit" },
-  { id: 8, title: "পণ্যের লাভ", img: cableTv, type: "product_profit" },
-  { id: 7, title: "উইথড্র", img: insuranceImg, type: "withdraw" },
+  { id: 1, titleKey: "owing_loan_balance", img: educationImg, type: "balance" },
+  { id: 2, titleKey: "daily_profit", img: electricityImg, type: "daily_profit" },
+  { id: 3, titleKey: "monthly_profit", img: gasImg, type: "monthly_profit" },
+  { id: 4, titleKey: "compound_profit", img: tapImg, type: "compounding_profit" },
+  { id: 5, titleKey: "daily_compound", img: vatImg, type: "daily_compounding_profit" },
+  { id: 6, titleKey: "monthly_compound", img: internetImg, type: "monthly_compounding_profit" },
+  { id: 7, titleKey: "product_profit", img: cableTv, type: "product_profit" },
+  { id: 8, titleKey: "cashup_withdraw", img: insuranceImg, type: "cashup_withdraw" },
 ];
 
 const CashupOwingDeposite = () => {
@@ -34,15 +35,15 @@ const CashupOwingDeposite = () => {
     queryKey: ['cashupOwingDeposit'],
     queryFn: () => apiReq.get('/api/cashup-owing-deposit/',)
   })
-  console.log(cashupBalance)
 
-  // Open Dialog
+  const { t } = useTranslation('dashboard');
+
   const handleOpen = (item) => {
     setSelectedItem(item);
     setOpenDialog(true);
   };
 
-  // Close Dialog
+
   const handleClose = () => {
     setOpenDialog(false);
     // setSelectedItem(null);
@@ -51,7 +52,7 @@ const CashupOwingDeposite = () => {
   return (
     <Box sx={{ bgcolor: "white", py: 5, px: 2 }}>
       <Typography variant="h6" fontWeight="bold" mb={3}>
-        ক্যাশআপ ডিপোজিট (ওউইং / ঋণ)
+        {t('cashup_deposit_owing_loan')}
       </Typography>
 
       {/* Grid Layout */}
@@ -66,15 +67,15 @@ const CashupOwingDeposite = () => {
                 p: 2,
                 cursor: "pointer",
                 boxShadow: 3,
-                borderRadius: 2,
                 border: '1px solid coral',
+                borderRadius: 2,
                 "&:hover": { boxShadow: 6 },
               }}
               onClick={() => handleOpen(service)}
             >
-              <img src={service.img ?? ''} style={{ width: 50, height: 50, marginBottom: 1 }} alt={service.title} />
+              <img src={service.img ?? ''} style={{ width: 50, height: 50, marginBottom: 1 }} alt={t(service.titleKey)} />
               <Typography fontSize={14} fontWeight="bold" textAlign="center">
-                {service.title}
+                {t(service.titleKey)}
               </Typography>
             </Card>
           </Grid>
@@ -82,17 +83,17 @@ const CashupOwingDeposite = () => {
       </Grid>
 
       {/* Dialog Component */}
-      <CDialog open={openDialog} onClose={handleClose} title={selectedItem?.title}>
+      <CDialog open={openDialog} onClose={handleClose} title={t(selectedItem?.titleKey)}>
         <Avatar src={selectedItem?.img} sx={{ width: 80, borderRadius: 0, height: 80, mb: 2, mx: "auto" }} alt={selectedItem?.title} />
         {selectedItem?.type === "balance" && <CashupOwingBalance />}
         {
           [
-            { label: 'Daily Profit', value: cashupBalance?.data[0]?.daily_profit ?? '0.00', key: 'daily_profit' },
-            { label: 'Monthly Profit', value: cashupBalance?.data[0]?.monthly_profit ?? '0.00', key: 'monthly_profit' },
-            { label: 'Compounding Profit', value: cashupBalance?.data[0]?.compounding_profit ?? '0.00', key: 'compounding_profit' },
-            { label: 'Daily Compounding Profit', value: cashupBalance?.data[0]?.daily_compounding_profit ?? '0.00', key: 'daily_compounding_profit' },
-            { label: 'Monthly Compounding Profit', value: cashupBalance?.data[0]?.monthly_compounding_profit ?? '0.00', key: 'monthly_compounding_profit' },
-            { label: 'Product Profit', value: cashupBalance?.data[0]?.product_profit, key: 'product_profit' },
+            { labelKey: 'daily_profit', value: cashupBalance?.data[0]?.daily_profit, key: 'daily_profit' },
+            { labelKey: 'monthly_profit', value: cashupBalance?.data[0]?.monthly_profit, key: 'monthly_profit' },
+            { labelKey: 'compound_profit', value: cashupBalance?.data[0]?.compounding_profit, key: 'compounding_profit' },
+            { labelKey: 'daily_compound', value: cashupBalance?.data[0]?.daily_compounding_profit, key: 'daily_compounding_profit' },
+            { labelKey: 'monthly_compound', value: cashupBalance?.data[0]?.monthly_compounding_profit, key: 'monthly_compounding_profit' },
+            { labelKey: 'product_profit', value: cashupBalance?.data[0]?.product_profit, key: 'product_profit' },
           ]
             ?.filter((item) => selectedItem?.type == item.key)
             ?.map((item, id) => (
@@ -100,7 +101,7 @@ const CashupOwingDeposite = () => {
                 <Typography
                   sx={{ textAlign: 'center', mb: 1, fontSize: '25px', color: 'purple' }}
                 >
-                  {item.label} :
+                  {t(item.labelKey)} : {/* Translate label */}
                 </Typography>
                 <Typography
                   sx={{ textAlign: 'center', mb: 4, fontSize: '25px', color: 'green' }}
@@ -111,7 +112,7 @@ const CashupOwingDeposite = () => {
             ))
         }
 
-        {selectedItem?.type === "withdraw" &&
+        {selectedItem?.type === "cashup_withdraw" &&
           <Box>
             <Typography
               sx={{ textAlign: 'center', mb: 1, fontSize: '25px', color: 'purple' }}
@@ -124,6 +125,7 @@ const CashupOwingDeposite = () => {
             <Typography sx={{ textAlign: 'center', color: 'coral', mt: 2 }}>you must have to pay your cash in main balance</Typography>
           </Box>
         }
+
       </CDialog>
     </Box>
   );

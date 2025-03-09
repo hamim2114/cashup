@@ -6,6 +6,7 @@ import React, { useState } from 'react'
 import apiReq from '../../utils/axiosInstance';
 import toast from 'react-hot-toast';
 import CButton from '../../common/CButton';
+import useUser from '../../hook/useUser';
 
 const AddToCart = ({ product, onClose }) => {
   const [productData, setProductData] = useState({
@@ -13,6 +14,8 @@ const AddToCart = ({ product, onClose }) => {
     quantity: 1,
     confirmed: false
   })
+
+  const { user } = useUser()
 
   const queryClient = useQueryClient()
 
@@ -57,18 +60,27 @@ const AddToCart = ({ product, onClose }) => {
         <Typography color="textSecondary" mb={1}>
           Category: {product?.category}
         </Typography>
-        <Stack mb={2} direction='row' alignItems='center' justifyContent='space-between'>
-          <Box display="flex" alignItems="center" gap={1}>
+        <Stack mb={2} direction='row' justifyContent='space-between'>
+          <Box flex={1} display="flex" alignItems="center" gap={1}>
             <Typography color="green" fontWeight="bold">
-              ${product?.price}
+              ৳ {product?.price}
             </Typography>
             <Typography color="textSecondary" sx={{ textDecoration: "line-through" }}>
-              ${product?.discount_rate}
+              ৳ {product?.discount_rate}
             </Typography>
           </Box>
-          <Typography color="textSecondary" fontSize={14}>
-            Member: ${product.members_price}
-          </Typography>
+          {
+            user?.membership_status ?
+              <Box sx={{ border: '1px solid purple', p: 1, borderRadius: '8px', width: 'fit-content' }} flex={1}>
+                <Typography sx={{ fontSize: '12px', color: 'purple', lineHeight: '13px', mb: 1 }}>Congratulation! you got membership price.</Typography>
+                <Typography sx={{ color: 'purple' }} fontSize={14}>
+                  Member: ৳ {product.members_price}
+                </Typography>
+              </Box> :
+              <Typography sx={{ color: 'purple', fontWeight: 600 }} fontSize={14}>
+                Member: ৳ {product.members_price}
+              </Typography>
+          }
         </Stack>
         <Stack direction='row' alignItems={'center'} gap={2}>
           <Stack direction='row' alignItems={'center'} gap={1}>
@@ -82,8 +94,8 @@ const AddToCart = ({ product, onClose }) => {
           </Stack>
           <CButton loading={addToCartMutation.isPending} onClick={handleAddToCart} size='small' variant="contained" fullWidth>Add</CButton>
         </Stack>
-      </Box>
-    </Card>
+      </Box >
+    </Card >
   )
 }
 

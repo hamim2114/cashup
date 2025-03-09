@@ -1,0 +1,18 @@
+{
+  "balance_inquiry": "Balance Inquiry",
+  "mini_statement": "Mini Statement",
+  "transaction_limit": "Transaction Limit",
+  "service_charge": "Service Charge",
+  "my_qr": "My QR",
+  "store_location": "Store Location",
+  "order_history": "Order History",
+  "main_balance_deposit_history": "Main Balance Deposit History",
+  "cashup_owing_deposit_history": "Cashup Owing Deposit History",
+  "main_balance_withdraw_history": "Main Balance Withdraw History",
+  "cashup_withdraw_history": "Cashup Withdraw History",
+  "compounding_withdraw_history": "Compounding Withdraw History",
+  "about_us": "About Us",
+  "contact": "Contact",
+  "complain": "Complain/Feedback",
+  "logout": "Logout"
+}

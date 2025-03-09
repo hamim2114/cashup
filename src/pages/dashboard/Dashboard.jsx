@@ -39,208 +39,167 @@ import CashupDeposite from "./cashupDeposit/CashupDeposite";
 import Header from "../../base/Header";
 import Footer from "../../base/Footer";
 import CashupOwingDeposite from "./cashupOwingDeposit/CashupOwingDeposite";
+import { useTranslation } from "react-i18next";
 
+const services = [
+  {
+    id: 1,
+    titleKey: "send_money",
+    img: sendMoney,
+  },
+  {
+    id: 2,
+    titleKey: "mobile_recharge",
+    img: mobileRecharge,
+  },
+  {
+    id: 3,
+    titleKey: "cash_out",
+    img: cashOut,
+  },
+  {
+    id: 4,
+    titleKey: "shopping",
+    img: shoppingCart,
+  },
+  {
+    id: 5,
+    titleKey: "cash_in",
+    img: cashIn,
+  },
+  {
+    id: 6,
+    titleKey: "bill_payment",
+    img: payBil,
+  },
+  {
+    id: 7,
+    titleKey: "bank_transfer",
+    img: bankTransfer,
+  },
+  {
+    id: 8,
+    titleKey: "link_account",
+    img: linkAccount,
+  },
+  {
+    id: 9,
+    titleKey: "exchange",
+    img: exchange,
+  },
+  {
+    id: 10,
+    titleKey: "e_toll",
+    img: eToll,
+  },
+  {
+    id: 11,
+    titleKey: "donation",
+    img: donation,
+  },
+  {
+    id: 12,
+    titleKey: "pension",
+    img: pension,
+  },
+];
+
+const payBills = [
+  {
+    id: 1,
+    titleKey: "education",
+    img: educationImg,
+  },
+  {
+    id: 2,
+    titleKey: "electricity",
+    img: electricityImg,
+  },
+  {
+    id: 3,
+    titleKey: "gas",
+    img: gasImg,
+  },
+  {
+    id: 4,
+    titleKey: "water",
+    img: tapImg,
+  },
+  {
+    id: 5,
+    titleKey: "government_fee",
+    img: vatImg,
+  },
+  {
+    id: 6,
+    titleKey: "internet",
+    img: internetImg,
+  },
+  {
+    id: 7,
+    titleKey: "insurance",
+    img: insuranceImg,
+  },
+  {
+    id: 8,
+    titleKey: "cable_tv",
+    img: cableTv,
+  },
+  {
+    id: 9,
+    titleKey: "telephone",
+    img: telephone,
+  },
+  {
+    id: 10,
+    titleKey: "microfinance",
+    img: microfinance,
+  },
+  {
+    id: 11,
+    titleKey: "others",
+    img: others,
+  },
+  {
+    id: 12,
+    titleKey: "pension",
+    img: pension,
+  },
+];
+
+const suggetions = [
+  {
+    id: 1,
+    titleKey: "btcl",
+    img: educationImg,
+  },
+  {
+    id: 2,
+    titleKey: "compound_interest",
+    img: electricityImg,
+  },
+  {
+    id: 3,
+    titleKey: "rural_electricity",
+    img: gasImg,
+  },
+  {
+    id: 4,
+    titleKey: "compound_interest",
+    img: tapImg,
+  },
+];
 
 function Dashboard() {
-  const services = [
-    {
-      id: 1,
-      title: "টাকা পাঠান",
-      img: sendMoney,
-    },
-    {
-      id: 2,
-      title: "মোবাইল রিচার্জ",
-      img: mobileRecharge,
-    },
-    {
-      id: 3,
-      title: "ক্যাশ আউট",
-      img: cashOut,
-    },
-    {
-      id: 4,
-      title: "কেনাকাটা",
-      img: shoppingCart,
-    },
-    {
-      id: 5,
-      title: "টাকা আনুন",
-      img: cashIn,
-    },
-    {
-      id: 6,
-      title: "বিল পরিশোধ",
-      img: payBil,
-    },
-    {
-      id: 7,
-      title: "ব্যাংক ট্রান্সফার",
-      img: bankTransfer,
-    },
-    {
-      id: 8,
-      title: "লিঙ্ক অ্যাকাউন্ট",
-      img: linkAccount,
-    },
-    {
-      id: 9,
-      title: "বিনিময়",
-      img: exchange,
-    },
-    {
-      id: 10,
-      title: "ই-টোল",
-      img: eToll,
-    },
-    {
-      id: 11,
-      title: "ডোনেশন",
-      img: donation,
-    },
-    {
-      id: 12,
-      title: "পেনশন",
-      img: pension,
-    },
-  ];
-
-  const payBills = [
-    {
-      id: 1,
-      title: "এডুকেশন",
-      img: educationImg,
-    },
-    {
-      id: 2,
-      title: "ইলেকট্রিসিটি",
-      img: electricityImg,
-    },
-    {
-      id: 3,
-      title: "গ্যাস",
-      img: gasImg,
-    },
-    {
-      id: 4,
-      title: "পানি",
-      img: tapImg,
-    },
-    {
-      id: 5,
-      title: "সরকারি ফি",
-      img: vatImg,
-    },
-    {
-      id: 6,
-      title: "ইন্টারনেট",
-      img: internetImg,
-    },
-    {
-      id: 7,
-      title: "ইন্স্যুরেন্স",
-      img: insuranceImg,
-    },
-    {
-      id: 8,
-      title: "ক্যাবল টিভি ",
-      img: cableTv,
-    },
-    {
-      id: 9,
-      title: "টেলিফোন ",
-      img: telephone,
-    },
-    {
-      id: 10,
-      title: "মাইক্রোফাইনান্স",
-      img: microfinance,
-    },
-    {
-      id: 11,
-      title: "অন্যান্য",
-      img: others,
-    },
-    {
-      id: 12,
-      title: "পেনশন",
-      img: pension,
-    },
-  ];
-  const suggetions = [
-    {
-      id: 1,
-      title: "বিটিসিএল",
-      img: educationImg,
-    },
-    {
-      id: 2,
-      title: "চক্রবৃদ্ধি লাভ",
-      img: electricityImg,
-    },
-    {
-      id: 3,
-      title: "পল্লী বিদ্যুৎ",
-      img: gasImg,
-    },
-    {
-      id: 4,
-      title: "চক্রবৃদ্ধি লাভ",
-      img: tapImg,
-    },
-  ];
-
-  const cashupDeposite = [
-    {
-      id: 1,
-      title: "মেইন ব্যালেন্স",
-      img: educationImg,
-    },
-    {
-      id: 2,
-      title: "দৈনিক লাভ",
-      img: electricityImg,
-    },
-    {
-      id: 3,
-      title: "মাসিক লাভ",
-      img: gasImg,
-    },
-    {
-      id: 4,
-      title: "চক্রবৃদ্ধি লাভ",
-      img: tapImg,
-    },
-    {
-      id: 5,
-      title: "দৈনিক চক্রবৃদ্ধি",
-      img: vatImg,
-    },
-    {
-      id: 6,
-      title: "মাসিক চক্রবৃদ্ধি",
-      img: internetImg,
-    },
-    {
-      id: 7,
-      title: "উইথড্র",
-      img: insuranceImg,
-    },
-    {
-      id: 8,
-      title: "পণ্যের লাভ",
-      img: cableTv,
-    },
-  ];
+  const { t } = useTranslation();
 
   return (
     <>
       <Header />
       <main>
-        {/* পরিষেবা সমূহ */}
         <section className="bg-white mb-10 py-5 rounded-t-3xl -mt-5">
           <div className="mx-2">
-            <h1 className="font-bold text-black text-lg mb-3">পরিষেবা সমূহ</h1>
+            <h1 className="font-bold text-black text-lg mb-3">{t("service")}</h1>
             <div className="grid grid-cols-4 gap-5">
               {services.map((service) => (
                 <div
@@ -255,17 +214,17 @@ function Dashboard() {
                     </div>
                   </div>
                   <div className="stat-title text-black text-center text-xs font-medium">
-                    {service.title}
+                    {t(service.titleKey)}
                   </div>
                 </div>
               ))}
             </div>
           </div>
         </section>
-        {/* বিল পে */}
+
         <section className="bg-white mb-10 py-5 -mt-5">
           <div className="mx-2">
-            <h1 className="font-bold text-black text-lg mb-3">বিল পে</h1>
+            <h1 className="font-bold text-black text-lg mb-3">{t("bill_pay")}</h1>
             <div className="grid grid-cols-4 gap-5">
               {payBills.map((service) => (
                 <div
@@ -280,18 +239,17 @@ function Dashboard() {
                     </div>
                   </div>
                   <div className="stat-title text-black text-center text-xs font-medium">
-                    {service.title}
+                    {t(service.titleKey)}
                   </div>
                 </div>
               ))}
             </div>
           </div>
         </section>
-        {/*  */}
-        {/* সাজেশন */}
+
         <section className="bg-white mb-10 py-5 -mt-5">
           <div className="mx-2">
-            <h1 className="font-bold text-black text-lg mb-3">সাজেশন</h1>
+            <h1 className="font-bold text-black text-lg mb-3">{t("suggestion")}</h1>
             <div className="grid grid-cols-4 gap-5">
               {suggetions.map((service) => (
                 <div
@@ -306,7 +264,7 @@ function Dashboard() {
                     </div>
                   </div>
                   <div className="stat-title text-black text-center text-xs font-medium">
-                    {service.title}
+                    {t(service.titleKey)}
                   </div>
                 </div>
               ))}
@@ -314,16 +272,15 @@ function Dashboard() {
           </div>
         </section>
 
-        {/* ক্যাশআপ ডিপোজিট */}
+        {/* cashup deposite */}
         <CashupDeposite />
 
-        {/* নগদ জমা (ঋণ) */}
+        {/* cashup owing deposite */}
         <CashupOwingDeposite />
-        {/*  */}
 
         <section className="mx-2">
           <div className="max-w-7xl mx-auto">
-            <div className="bg-[rgb(33,54,68)] py-2 text-white   flex items-center justify-start gap-10  rounded-md">
+            {/* <div className="bg-[rgb(33,54,68)] py-2 text-white   flex items-center justify-start gap-10  rounded-md">
               <div className="bg-[rgb(33,54,68)] z-10">
                 <i className="px-3  text-2xl  fa-solid fa-bell bell-animation"></i>
               </div>
@@ -337,7 +294,7 @@ function Dashboard() {
                   )
                 </h1>
               </div>
-            </div>
+            </div> */}
             <div className=" border border-black mt-5 rounded-md">
               <h1 className="p-3 text-[rgb(33,54,68)] text-xl font-bold">
                 Cashup
@@ -345,7 +302,6 @@ function Dashboard() {
               <hr className="border-b-1 border-black" />
               <div className="container mx-auto mt-2 max-w-7xl">
                 <div className="py-3 grid grid-cols-4 sm:grid-cols-4 md:grid-cols-4 gap-4">
-                  {/* <!-- Card 1 --> */}
                   <Link to="/task">
                     <a
                       href=""
@@ -362,7 +318,6 @@ function Dashboard() {
                     </a>
                   </Link>
 
-                  {/* <!-- Card 2 --> */}
                   <Link to="/deposit">
                     <a
                       href=""
@@ -383,7 +338,6 @@ function Dashboard() {
                     </a>
                   </Link>
 
-                  {/* <!-- Card 3 --> */}
                   <Link to="/cashout">
                     <a
                       href=""
@@ -404,7 +358,6 @@ function Dashboard() {
                     </a>
                   </Link>
 
-                  {/* <!-- Card 4 --> */}
                   <Link to="/package">
                     <a
                       href=""
@@ -421,7 +374,6 @@ function Dashboard() {
                     </a>
                   </Link>
 
-                  {/* <!-- Card 5 --> */}
                   <Link to="/profile">
                     <a
                       href=""
@@ -442,7 +394,6 @@ function Dashboard() {
                     </a>
                   </Link>
 
-                  {/* <!-- Card 6 --> */}
                   <Link to="/history">
                     <a
                       href=""
@@ -463,7 +414,6 @@ function Dashboard() {
                     </a>
                   </Link>
 
-                  {/* <!-- Card 7 --> */}
                   <Link to="/refer">
                     <a
                       href=""
@@ -480,7 +430,6 @@ function Dashboard() {
                     </a>
                   </Link>
 
-                  {/* <!-- Card 8 --> */}
                   <Link to="/help">
                     <a
                       href=""
@@ -527,8 +476,6 @@ function Dashboard() {
               <hr className="border-b-1 border-black" />
               <div className="container mx-auto mt-2 max-w-7xl">
                 <div className="py-3 grid grid-cols-4 sm:grid-cols-4 md:grid-cols-4 gap-4">
-                  {/* <!-- Card 1 --> */}
-
                   <a
                     href="#"
                     className="flex flex-col items-center text-center"
@@ -543,7 +490,6 @@ function Dashboard() {
                     </div>
                   </a>
 
-                  {/* <!-- Card 2 --> */}
                   <a
                     href="#"
                     className="flex flex-col items-center text-center"
@@ -558,7 +504,6 @@ function Dashboard() {
                     </div>
                   </a>
 
-                  {/* <!-- Card 3 --> */}
                   <a
                     href="#"
                     className="flex flex-col items-center text-center"
@@ -573,7 +518,6 @@ function Dashboard() {
                     </div>
                   </a>
 
-                  {/* <!-- Card 4 --> */}
                   <a
                     href="https://t.me/Exnessforex2"
                     className="flex flex-col items-center text-center"
@@ -588,7 +532,6 @@ function Dashboard() {
                     </div>
                   </a>
 
-                  {/* <!-- Card 5 --> */}
                   <a
                     href="https://www.tiktok.com/@tradersadnan?_t=ZS-8sJJ2neboKw&_r=1"
                     target="_blank"
@@ -619,7 +562,6 @@ function Dashboard() {
           </div>
         </section>
 
-        {/* footer */}
         <Footer />
       </main>
     </>
