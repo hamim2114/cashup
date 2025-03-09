@@ -6,7 +6,7 @@ import { refreshToken } from './auth';
 //   : 'https://test-app-project.onrender.com/';
 
 // const baseURL = "http://127.0.0.1:8000/";
-const baseURL = "https://test-app-project.onrender.com/";
+const baseURL = "https://cashup-server.onrender.com/";
 
 // Create an Axios instance
 const apiReq = axios.create({
