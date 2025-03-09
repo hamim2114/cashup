@@ -58,7 +58,7 @@ const CashupOwingDeposite = () => {
       {/* Grid Layout */}
       <Grid container spacing={2}>
         {cashupDeposite.map((service) => (
-          <Grid item xs={6} sm={4} md={3} key={service.id}>
+          <Grid item xs={6} sm={6} md={6} key={service.id}>
             <Card
               sx={{
                 display: "flex",

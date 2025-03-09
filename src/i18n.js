@@ -8,7 +8,7 @@ i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
-    // lng: 'bn', // Default language
+    lng: localStorage.getItem('i18nextLng') || 'bn', // Default language
     fallbackLng: 'en', // Fallback language
     debug: false,
     interpolation: {
@@ -19,6 +19,10 @@ i18n
     },
     ns: ['dashboard', 'profile',],
     defaultNS: 'dashboard',
+    detection: {
+      order: ['localStorage', 'navigator'], // It checks localStorage first
+      caches: ['localStorage'], // Persist language selection in localStorage
+    },
   });
 
 export default i18n;
