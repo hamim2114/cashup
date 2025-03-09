@@ -21,7 +21,7 @@ const OrderHistory = () => {
       width: 170,
       renderCell: (params) => (
         <Stack gap={1} direction='row' alignItems='center' height='100%'>
-          <img style={{ width: '60px', height: 50, objectFit: 'cover' }} src={params.row.item_image} alt="" />
+          <img style={{ width: '60px', height: 50, objectFit: 'cover' }} src={params.row.item?.item_image ?? ''} alt="" />
           <Box>
             <Typography>{params.row.item.name}</Typography>
             <Typography sx={{ color: 'coral', fontSize: '14px' }}>x{params.row.quantity}</Typography>

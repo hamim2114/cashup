@@ -61,14 +61,14 @@ const ProductCard = ({ product }) => {
         </Typography>
         <Box display="flex" alignItems="center" gap={1}>
           <Typography color="green" fontWeight="bold">
-            ${product?.price}
+            ৳ {product?.price}
           </Typography>
           <Typography color="textSecondary" sx={{ textDecoration: "line-through" }}>
-            ${product?.discount_rate}
+            ৳ {product?.discount_rate}
           </Typography>
         </Box>
         <Typography color="textSecondary" fontSize={14} mb={2}>
-          Member: ${product.members_price}
+          Member: ৳ {product.members_price}
         </Typography>
 
         <Button endIcon={<AddShoppingCart />} onClick={handleAddToCart} size='small' variant="contained" fullWidth>Add To Cart</Button>
