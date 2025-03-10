@@ -13,9 +13,16 @@ import { useTranslation } from "react-i18next";
 
 function Profile() {
   const [profileEditDialogOpen, setProfileEditDialogOpen] = useState(false)
-  const [language, setLanguage] = useState('BN');
+  const { i18n } = useTranslation('dashboard');
 
-  const { user } = useUser()
+  const { user } = useUser();
+
+  const changeLanguage = (lng) => {
+    const language = lng.target.value;
+
+    i18n.changeLanguage(language); // Change language
+  };
+
 
   const { t } = useTranslation('profile')
 
@@ -47,7 +54,11 @@ function Profile() {
         <section className="pb-10">
           <div className="bg-fuchsia-600 flex flex-col p-5">
             <Stack direction="row" justifyContent="space-between" alignItems="center">
-              <Box />
+              <select value={i18n.language} onChange={changeLanguage}
+                className="rounded-sm">
+                <option value="bn">Bangla</option>
+                <option value="en">English</option>
+              </select>
               <IconButton color="secondary" onClick={() => setProfileEditDialogOpen(true)} variant="contained">
                 <AiOutlineEdit />
               </IconButton>
@@ -161,6 +172,18 @@ function Profile() {
               <button className="btn w-full justify-start bg-white border-none shadow-none">
                 <ShoppingCartCheckout sx={{ color: '#7F22CE' }} />
                 <p className="text-md">{t('order_history')}</p>
+              </button>
+            </Link>
+            <Link to='/main-balance-deposit-history'>
+              <button className="btn w-full justify-start bg-white border-none shadow-none">
+                <SettingsBackupRestore sx={{ color: '#7F22CE' }} />
+                <p className="text-md">{t('main_balance_deposit_history')}</p>
+              </button>
+            </Link>
+            <Link to='/main-owing-balance-deposit-history'>
+              <button className="btn w-full justify-start bg-white border-none shadow-none">
+                <SettingsBackupRestore sx={{ color: '#7F22CE' }} />
+                <p className="text-md">{t('main_Owing_balance_deposit_history')}</p>
               </button>
             </Link>
             <Link to='/main-balance-withdraw-history'>

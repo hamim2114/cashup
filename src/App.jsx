@@ -22,6 +22,8 @@ import OrderHistory from "./pages/orderHistory/OrderHistory";
 import CashupWithdrawHistory from "./pages/cashupWithdrawHistory/Index";
 import CompoundingWithdrawHistory from "./pages/compoundingWithdrawHistory/Index";
 import MainBalanceWithdrawHistory from "./pages/mainBalanceWithdrawHistory/Index";
+import MainBalanceDepositHistory from "./pages/mainBalanceDepositHistory/Index";
+import MainOwingBalanceDepositHistory from "./pages/mainOwingBalanceDepositHistory/Index";
 
 const PrivateRoute = () => {
   const { token } = useAuth();
@@ -34,7 +36,7 @@ function App() {
 
 
   return (
-    <Container sx={{ px: 0 }} maxWidth='sm'>
+    <Container sx={{ px: 0, maxWidth: '500px' }} >
       <Routes>
         {/* Public Routes */}
         <Route path="/" element={token ? <Navigate to='/dashboard' /> : <Login />} />
@@ -47,11 +49,12 @@ function App() {
           <Route path="product" element={<Product />} />
           <Route path="order-cart" element={<OrderCart />} />
           <Route path="order-history" element={<OrderHistory />} />
+          <Route path="main-balance-deposit-history" element={<MainBalanceDepositHistory />} />
+          <Route path="main-owing-balance-deposit-history" element={<MainOwingBalanceDepositHistory />} />
           <Route path="cashup-withdraw-history" element={<CashupWithdrawHistory />} />
           <Route path="compounding-withdraw-history" element={<CompoundingWithdrawHistory />} />
           <Route path="main-balance-withdraw-history" element={<MainBalanceWithdrawHistory />} />
           <Route path="package" element={<Package />} />
-          <Route path="dash" element={<Dashboard />} />
           <Route path="cashout" element={<Cashout />} />
           <Route path="deposit" element={<Deposit />} />
           <Route path="refer" element={<Refer />} />

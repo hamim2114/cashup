@@ -46,9 +46,9 @@
                 100% { transform: rotate(0deg); }
             }
           
-            .bell-animation {
+            /* .bell-animation {
                 animation: bellSwing 0.5s ease-in-out infinite;
-            }
+            } */
           
             
 @keyframes marquee {

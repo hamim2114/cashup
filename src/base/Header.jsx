@@ -7,31 +7,26 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import CDialog from "../common/CDialog";
 import MainBalanceWithdraw from "../components/MainBalanceWithdraw";
-import { useTranslation } from 'react-i18next';
+import MainOwingBalanceReq from "../components/MainOwingBalanceReq";
+import { useTranslation } from "react-i18next";
 
 function Header() {
   const [mainBalanceDialogOpen, setMainBalanceDialogOpen] = useState(false)
+  const [mainOwingBalanceDialogOpen, setMainOwingBalanceDialogOpen] = useState(false)
+  const [mainOwingBalanceReqDialogOpen, setMainOwingBalanceReqDialogOpen] = useState(false)
   const [withdrawReqDialogOpen, setWithdrawReqDialogOpen] = useState(false)
 
-  const { t, i18n } = useTranslation('dashboard');
 
   const { user } = useUser();
 
-  const changeLanguage = (lng) => {
-    const language = lng.target.value;
+  const { t } = useTranslation('dashboard')
 
-    i18n.changeLanguage(language); // Change language
-  };
 
   const { data: cashupOwingDeposit } = useQuery({
     queryKey: ['cashupOwingDeposit'],
     queryFn: () => apiReq.get('/api/cashup-owing-deposit/')
   })
 
-
-  const handleOwingBalance = () => {
-    Swal.fire(`Owing Balance ${cashupOwingDeposit?.data[0]?.cashup_owing_main_balance ?? "0.00"} BDT`);
-  };
 
   return (
     <>
@@ -53,16 +48,12 @@ function Header() {
           </Link>
           <Stack direction='row' alignItems='center' gap={2}>
 
-            <select value={i18n.language} onChange={changeLanguage}
-              className="rounded-sm">
-              <option value="bn">Bangla</option>
-              <option value="en">English</option>
-            </select>
+
             <Link
               to="/deposit"
             >
               <Button variant="contained" color="warning">
-                Deposit
+                {t('deposit')}
               </Button>
             </Link>
           </Stack>
@@ -92,7 +83,7 @@ function Header() {
               role="button"
               className="btn mt-2 p-2 bg-white text-black/80 font-bold w-[200px] rounded-full"
             >
-              Balance
+              {t('balance')}
             </div>
             <ul
               tabIndex={0}
@@ -103,15 +94,15 @@ function Header() {
                   onClick={() => setMainBalanceDialogOpen(true)}
                   className="btn btn-secondary"
                 >
-                  Main Balance
+                  {t('main_balance')}
                 </button>
               </li>
               <li>
                 <button
-                  onClick={handleOwingBalance}
+                  onClick={() => setMainOwingBalanceDialogOpen(true)}
                   className="btn btn-secondary"
                 >
-                  Owing Balance
+                  {t('owing_balance')}
                 </button>
               </li>
             </ul>
@@ -124,9 +115,20 @@ function Header() {
         <Button onClick={() => setWithdrawReqDialogOpen(true)} variant="contained" style={{ width: '100%' }}>WithDraw</Button>
       </CDialog>
 
+      {/* Owing Balance dialog */}
+      <CDialog title='Owing / Loan Balance' open={mainOwingBalanceDialogOpen} onClose={() => setMainOwingBalanceDialogOpen(false)} >
+        <Typography sx={{ textAlign: 'center', color: 'green', my: 5 }} variant="h4">{0.00} BDT</Typography>
+        <Button onClick={() => setMainOwingBalanceReqDialogOpen(true)} variant="contained" style={{ width: '100%' }}>Request For Loan</Button>
+      </CDialog>
+
       {/* withdraw page dialog */}
       <CDialog title='Withdraw main Balance' open={withdrawReqDialogOpen} onClose={() => setWithdrawReqDialogOpen(false)}>
         <MainBalanceWithdraw />
+      </CDialog>
+
+      {/* owing main balance reqest dialog */}
+      <CDialog title='Owing / Loan Request' open={mainOwingBalanceReqDialogOpen} onClose={() => setMainOwingBalanceReqDialogOpen(false)} >
+        <MainOwingBalanceReq />
       </CDialog>
     </>
   );

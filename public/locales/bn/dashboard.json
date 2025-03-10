@@ -1,4 +1,9 @@
 {
+  "deposit": "ডিপোজিট",
+  "balance": "ব্যালেন্স",
+  "main_balance": "মেইন ব্যালেন্স",
+  "owing_balance": "ওউইং ব্যালেন্স",
+
   "service": "পরিষেবা সমূহ",
   "send_money": "টাকা পাঠান",
   "mobile_recharge": "মোবাইল রিচার্জ",

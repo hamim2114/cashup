@@ -40,6 +40,10 @@ import Header from "../../base/Header";
 import Footer from "../../base/Footer";
 import CashupOwingDeposite from "./cashupOwingDeposit/CashupOwingDeposite";
 import { useTranslation } from "react-i18next";
+import Slider from "../../components/Slider";
+import { useState } from "react";
+import { Box, Collapse, Divider, Stack } from "@mui/material";
+import { KeyboardArrowDownOutlined } from "@mui/icons-material";
 
 const services = [
   {
@@ -61,6 +65,7 @@ const services = [
     id: 4,
     titleKey: "shopping",
     img: shoppingCart,
+    url: "/product",
   },
   {
     id: 5,
@@ -191,21 +196,19 @@ const suggetions = [
 ];
 
 function Dashboard() {
+  const [expandService, setExpandService] = useState(false)
   const { t } = useTranslation();
 
   return (
     <>
       <Header />
       <main>
-        <section className="bg-white mb-10 py-5 rounded-t-3xl -mt-5">
+        <section className="bg-white py-5 rounded-t-3xl -mt-5">
           <div className="mx-2">
             <h1 className="font-bold text-black text-lg mb-3">{t("service")}</h1>
             <div className="grid grid-cols-4 gap-5">
-              {services.map((service) => (
-                <div
-                  key={service.id}
-                  className="stat flex flex-col items-center justify-center"
-                >
+              {services.slice(0, 8).map((service) => (
+                <Link to={service.url || "/"} key={service.id} className="stat flex flex-col items-center justify-center">
                   <div className="stat-figure text-secondary mb-2">
                     <div className="avatar">
                       <div className="w-10">
@@ -216,38 +219,79 @@ function Dashboard() {
                   <div className="stat-title text-black text-center text-xs font-medium">
                     {t(service.titleKey)}
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
-          </div>
-        </section>
 
-        <section className="bg-white mb-10 py-5 -mt-5">
-          <div className="mx-2">
-            <h1 className="font-bold text-black text-lg mb-3">{t("bill_pay")}</h1>
-            <div className="grid grid-cols-4 gap-5">
-              {payBills.map((service) => (
-                <div
-                  key={service.id}
-                  className="stat flex flex-col items-center justify-center"
-                >
-                  <div className="stat-figure text-secondary mb-2">
-                    <div className="avatar">
-                      <div className="w-10">
-                        <img src={service.img} />
+            {/* service */}
+            <Collapse in={expandService}>
+              <div className="grid grid-cols-4 gap-5">
+                {services.slice(8).map((service) => (
+                  <Link to={service.url || "/"} key={service.id} className="stat flex flex-col items-center justify-center">
+                    <div className="stat-figure text-secondary mb-2">
+                      <div className="avatar">
+                        <div className="w-10">
+                          <img src={service.img} />
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="stat-title text-black text-center text-xs font-medium">
-                    {t(service.titleKey)}
+                    <div className="stat-title text-black text-center text-xs font-medium">
+                      {t(service.titleKey)}
+                    </div>
+                  </Link>
+                ))}
+              </div>
+
+              {/* bill pay */}
+              <section className="bg-white py-5 -mt-5">
+                <div className="mx-2">
+                  <h1 className="font-bold text-black text-lg mb-3">{t("bill_pay")}</h1>
+                  <div className="grid grid-cols-4 gap-5">
+                    {payBills.map((service) => (
+                      <div
+                        key={service.id}
+                        className="stat flex flex-col items-center justify-center"
+                      >
+                        <div className="stat-figure text-secondary mb-2">
+                          <div className="avatar">
+                            <div className="w-10">
+                              <img src={service.img} />
+                            </div>
+                          </div>
+                        </div>
+                        <div className="stat-title text-black text-center text-xs font-medium">
+                          {t(service.titleKey)}
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
-              ))}
-            </div>
+              </section>
+
+            </Collapse>
+
+            <Stack sx={{ width: '100%' }} onClick={() => setExpandService(!expandService)}>
+              <Divider sx={{ width: '100%' }} />
+              <KeyboardArrowDownOutlined sx={{
+                alignSelf: 'center',
+                mt: -1.5,
+                bgcolor: 'white',
+                border: '1px solid lightgray',
+                borderRadius: '50%',
+                boxShadow: 2,
+                cursor: 'pointer'
+              }} />
+            </Stack>
           </div>
         </section>
 
-        <section className="bg-white mb-10 py-5 -mt-5">
+        <section className="mb-6">
+          <Slider />
+        </section>
+
+
+
+        {/* <section className="bg-white mb-10 py-5 -mt-5">
           <div className="mx-2">
             <h1 className="font-bold text-black text-lg mb-3">{t("suggestion")}</h1>
             <div className="grid grid-cols-4 gap-5">
@@ -270,7 +314,7 @@ function Dashboard() {
               ))}
             </div>
           </div>
-        </section>
+        </section> */}
 
         {/* cashup deposite */}
         <CashupDeposite />
@@ -476,7 +520,7 @@ function Dashboard() {
               <hr className="border-b-1 border-black" />
               <div className="container mx-auto mt-2 max-w-7xl">
                 <div className="py-3 grid grid-cols-4 sm:grid-cols-4 md:grid-cols-4 gap-4">
-                  <a
+                  {/* <a
                     href="#"
                     className="flex flex-col items-center text-center"
                   >
@@ -488,7 +532,7 @@ function Dashboard() {
                         Setting
                       </p>
                     </div>
-                  </a>
+                  </a> */}
 
                   <a
                     href="#"

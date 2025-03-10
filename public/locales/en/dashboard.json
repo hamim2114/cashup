@@ -1,4 +1,9 @@
 {
+   "deposit": "Deposit",
+  "balance": "Balance",
+  "main_balance": "Main Balance",
+  "owing_balance": "Owing Balance",
+
   "service": "Services",
   "send_money": "Send Money",
   "mobile_recharge": "Mobile Recharge",
