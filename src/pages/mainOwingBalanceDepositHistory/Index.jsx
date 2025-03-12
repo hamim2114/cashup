@@ -4,24 +4,36 @@ import DataTable from '../../common/DataTable';
 import { Link, useNavigate } from 'react-router-dom';
 import apiReq from '../../utils/axiosInstance';
 import { useQuery } from '@tanstack/react-query';
+import { format } from 'date-fns';
 
 const MainOwingBalanceDepositHistory = () => {
 
   const { data, isLoading, isError } = useQuery({
-    queryKey: ['withdrawal-from-main-balance'],
-    queryFn: () => apiReq.get('/')
+    queryKey: ['transfer-to-cashup-owing-deposit'],
+    queryFn: () => apiReq.get('/api/transfer-to-cashup-owing-deposit/')
   })
 
   const navigate = useNavigate()
-
+  console.log(data)
   const columns = [
+    {
+      field: 'date',
+      headerName: 'Date',
+      width: 120,
+      renderCell: (params) => (
+        <Stack height='100%' justifyContent='center'>
+          <Typography sx={{ fontSize: '14px' }}>{format(params.row?.date, 'dd-MM-yyyy')}</Typography>
+          <Typography sx={{ fontSize: '12px', color: 'gray' }} >{format(params.row?.date, 'hh:mm a')}</Typography>
+        </Stack>
+      ),
+    },
     {
       field: 'amount',
       headerName: 'Amount',
-      width: 150,
+      width: 120,
       renderCell: (params) => (
         <Stack gap={1} direction='row' alignItems='center' height='100%'>
-          <Typography>{params.row.amount} ৳</Typography>
+          <Typography >{params.row.amount} ৳</Typography>
         </Stack>
       ),
     },
@@ -33,9 +45,12 @@ const MainOwingBalanceDepositHistory = () => {
         <Stack justifyContent='center' height='100%'>
           <Typography sx={{
             fontSize: '13px',
-            color: params.row.status === 'Approved' ? 'green' : 'gray'
-          }}>{params.row.status}</Typography>
-          {/* <Typography sx={{ fontSize: '12px', color: params.row.paid ? 'green' : 'gray' }}>{params.row.paid ? 'Paid' : 'Unpaid'}</Typography> */}
+            color: '#fff',
+            width: 'fit-content',
+            borderRadius: '4px',
+            px: 1,
+            bgcolor: params.row.verified ? 'green' : 'darkgray'
+          }}>{params.row.verified ? 'Verified' : 'Unverified'}</Typography>
         </Stack>
       ),
     },
@@ -44,7 +59,7 @@ const MainOwingBalanceDepositHistory = () => {
   return (
     <Box >
       <nav className="bg-[rgb(33,54,68)] py-3">
-        <div className="p-2 flex flex-wrap items-center justify-start gap-10 max-w-screen-xl px-4 mx-auto">
+        <div className="p-2 flex  items-center justify-start gap-10 max-w-screen-xl px-4 mx-auto">
           <div onClick={() => navigate(-1)} style={{ cursor: 'pointer' }}>
             <i className="fa-solid fa-chevron-left text-3xl text-white"></i>
           </div>
@@ -58,9 +73,9 @@ const MainOwingBalanceDepositHistory = () => {
         <DataTable
           rows={data?.data ?? []}
           columns={columns}
+          getRowId={(row) => Math.random()}
           rowHeight={70}
           loading={isLoading}
-          noRowsLabel='No Order Found'
         />
       </Box>
     </Box >

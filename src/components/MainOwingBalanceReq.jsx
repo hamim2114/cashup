@@ -2,31 +2,28 @@ import { Box, Button, TextField, Typography } from '@mui/material'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import { useState } from 'react';
-import useUser from '../hook/useUser';
 import apiReq from '../utils/axiosInstance';
 import CButton from '../common/CButton';
+import { useNavigate } from 'react-router-dom';
 
 const MainOwingBalanceReq = () => {
   const [amount, setAmount] = useState('')
   const [errMsg, setErrMsg] = useState({})
 
-  const { user } = useUser()
-
-  const queryClient = useQueryClient()
 
   const { data: cashupBalance } = useQuery({
     queryKey: ['cashupOwingDeposit'],
     queryFn: () => apiReq.get('/api/cashup-owing-deposit/',)
   })
-  console.log(cashupBalance)
 
+  const navigate = useNavigate()
 
   const mutation = useMutation({
     mutationFn: (input) => apiReq.post('/api/transfer-to-cashup-owing-deposit/', input),
     onSuccess: (res) => {
       toast.success(res.data.message);
-      queryClient.invalidateQueries(['user'])
       setAmount('')
+      navigate('/main-owing-balance-deposit-history')
     },
     onError: (err) => {
       console.log(err)
@@ -45,7 +42,7 @@ const MainOwingBalanceReq = () => {
   const handleSave = () => {
     if (amount == 0) return setErrMsg({ amount: 'Amount Required' })
     if (amount < 100) return setErrMsg({ amount: 'Minimum amount 100 BDT' })
-    mutation.mutate({ amount: Number(amount) })
+    mutation.mutate({ amount: Number(amount), verified: false })
   }
 
 

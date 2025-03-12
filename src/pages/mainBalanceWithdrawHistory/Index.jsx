@@ -4,6 +4,7 @@ import DataTable from '../../common/DataTable';
 import { Link, useNavigate } from 'react-router-dom';
 import apiReq from '../../utils/axiosInstance';
 import { useQuery } from '@tanstack/react-query';
+import { format } from 'date-fns';
 
 const MainBalanceWithdrawHistory = () => {
 
@@ -13,15 +14,26 @@ const MainBalanceWithdrawHistory = () => {
   })
 
   const navigate = useNavigate()
-
+  console.log(data)
   const columns = [
+    {
+      field: 'date',
+      headerName: 'Date',
+      width: 120,
+      renderCell: (params) => (
+        <Stack height='100%' justifyContent='center'>
+          <Typography sx={{ fontSize: '14px' }} >{format(params.row?.date, 'dd-MM-yyyy')}</Typography>
+          <Typography sx={{ fontSize: '12px', color: 'gray' }} >{format(params.row?.date, 'hh:mm a')}</Typography>
+        </Stack>
+      ),
+    },
     {
       field: 'amount',
       headerName: 'Amount',
       width: 150,
       renderCell: (params) => (
         <Stack gap={1} direction='row' alignItems='center' height='100%'>
-          <Typography>{params.row.amount} ৳</Typography>
+          <Typography sx={{ color: 'green' }}>{params.row.amount} ৳</Typography>
         </Stack>
       ),
     },
@@ -44,7 +56,7 @@ const MainBalanceWithdrawHistory = () => {
   return (
     <Box >
       <nav className="bg-[rgb(33,54,68)] py-3">
-        <div className="p-2 flex flex-wrap items-center justify-start gap-10 max-w-screen-xl px-4 mx-auto">
+        <div className="p-2 flex items-center justify-start gap-10 max-w-screen-xl px-4 mx-auto">
           <div onClick={() => navigate(-1)} style={{ cursor: 'pointer' }}>
             <i className="fa-solid fa-chevron-left text-3xl text-white"></i>
           </div>
@@ -60,7 +72,6 @@ const MainBalanceWithdrawHistory = () => {
           columns={columns}
           rowHeight={70}
           loading={isLoading}
-          noRowsLabel='No Order Found'
         />
       </Box>
     </Box >

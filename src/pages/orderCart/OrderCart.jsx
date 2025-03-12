@@ -11,20 +11,26 @@ import CDialog from "../../common/CDialog";
 import toast from "react-hot-toast";
 import CButton from "../../common/CButton";
 import Checkout from "../Checkout/Checkout";
+import useUser from "../../hook/useUser";
 
 const OrderCart = () => {
   const [removeCartData, setRemoveCartData] = useState({})
   const [removeDialogOpen, setRemoveDialogOpen] = useState(false)
   const [checkOutDialogOpen, setCheckOutDialogOpen] = useState(false)
 
+  const { user } = useUser()
+  console.log(user)
   const { data, isLoading, isError } = useQuery({
     queryKey: ['carted-products'],
     queryFn: () => apiReq.get('/api/carted-products/')
   })
 
+  console.log('carted -products', data)
+  const isMember = user?.membership_status
   // Calculate the total value of all items in the cart
-  const totalValue = data?.data?.reduce((sum, item) => sum + Number(item.total_price), 0) || 0;
-  console.log(totalValue)
+  const totalValue = data?.data?.reduce((sum, item) => {
+    return sum + (isMember ? Number(item.total_membership_price) : Number(item.discount_total_price));
+  }, 0) || 0;
   const queryClient = useQueryClient()
 
   const removeMutation = useMutation({
@@ -52,7 +58,7 @@ const OrderCart = () => {
           <Link to="/product">
             <FaArrowLeft size={30} />
           </Link>
-          <Typography variant="h5" ml={2} >Shopping Cart</Typography>
+          <Typography variant="h5" ml={2} >Order Cart</Typography>
         </ListItem>
         <div className="overflow-x-auto">
           {
@@ -83,19 +89,21 @@ const OrderCart = () => {
                           </div>
                         </td>
                         <td>
+                          {isMember && <Typography>৳ {item?.item?.members_price}</Typography>}
+                          {!isMember && <Typography>৳ {item?.item?.discount_price}</Typography>}
                           <div className="flex items-center gap-2">
-                            x<Typography >{item.quantity}</Typography>
+                            <Typography>x{item.quantity}</Typography>
                           </div>
-                          <Typography>
-                            ৳ {item?.item?.price}
-                          </Typography>
                         </td>
                         {/* <td>
                           <div className="flex items-center gap-2">
                             x<Typography >{item.quantity}</Typography>
                           </div>
                         </td> */}
-                        <td>৳ {item?.total_price}</td>
+                        <td>
+                          {isMember && <Typography sx={{ fontWeight: 600 }}>৳ {item?.total_membership_price}</Typography>}
+                          {!isMember && <Typography sx={{ fontWeight: 600 }}>৳ {item?.discount_total_price}</Typography>}
+                        </td>
                         <td>
                           <IconButton onClick={() => {
                             setRemoveCartData(item)
@@ -109,10 +117,13 @@ const OrderCart = () => {
                     {/* Total Value Row */}
                     <tr>
                       <td></td>
-                      <td className="text-right font-semibold">
-                        Total:
+                      <td >
+                        <Typography sx={{ textAlign: 'right' }}>Total:</Typography>
+
                       </td>
-                      <td className="font-semibold">৳ {totalValue}</td>
+                      <td >
+                        <Typography sx={{ fontWeight: 600 }}>৳ {totalValue}</Typography>
+                      </td>
                     </tr>
                   </tbody>
                 </table>

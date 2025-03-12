@@ -8,9 +8,7 @@ export const theme = createTheme({
     secondary: {
       main: '#fff'
     },
-    // text: {
-    //   main: '#685F78'
-    // },
+
   },
   mixins: {
     MuiDataGrid: {

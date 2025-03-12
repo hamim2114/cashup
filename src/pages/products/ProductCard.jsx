@@ -60,11 +60,11 @@ const ProductCard = ({ product }) => {
           {product?.description}
         </Typography>
         <Box display="flex" alignItems="center" gap={1}>
-          <Typography color="green" fontWeight="bold">
+          <Typography color="green" fontWeight="bold" sx={{ textDecoration: "line-through" }}>
             ৳ {product?.price}
           </Typography>
-          <Typography color="textSecondary" sx={{ textDecoration: "line-through" }}>
-            ৳ {product?.discount_rate}
+          <Typography color="green" >
+            ৳ {product?.discount_price}
           </Typography>
         </Box>
         <Typography sx={{ color: 'purple' }} fontSize={14} mb={2}>

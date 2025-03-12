@@ -53,7 +53,7 @@ function Login() {
   return (
     <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh" bgcolor="grey.100">
       <Paper elevation={3} sx={{ p: 4, maxWidth: 400, width: "100%", textAlign: "center" }}>
-        <Avatar src={authLogo} sx={{ width: 120, height: 100, mx: "auto", mb: 2 }} />
+        <Avatar src={authLogo} sx={{ width: 250, borderRadius: 0, height: 100, mx: "auto", mb: 6 }} />
         <form onSubmit={handleSubmit}>
           <TextField
             fullWidth

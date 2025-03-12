@@ -62,11 +62,11 @@ const AddToCart = ({ product, onClose }) => {
         </Typography>
         <Stack mb={2} direction='row' justifyContent='space-between'>
           <Box flex={1} display="flex" alignItems="center" gap={1}>
-            <Typography color="green" fontWeight="bold">
+            <Typography color="green" fontWeight="bold" sx={{ textDecoration: "line-through" }}>
               ৳ {product?.price}
             </Typography>
-            <Typography color="textSecondary" sx={{ textDecoration: "line-through" }}>
-              ৳ {product?.discount_rate}
+            <Typography color="green" >
+              ৳ {product?.discount_price}
             </Typography>
           </Box>
           {

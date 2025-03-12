@@ -6,6 +6,8 @@
   "my_qr": "আমার কিউআর",
   "store_location": "স্টোরের অবস্থান",
   "order_history": "অর্ডার হিস্টোরি",
+  "cashup_profit_history": "ক্যাশআপ প্রফিট হিস্টোরি",
+  "cashup_owing_profit_history": "ক্যাশআপ ওউইং প্রফিট হিস্টোরি",
   "main_balance_deposit_history": "মেইন ব্যালেন্স ডিপোজিট হিস্টোরি",
   "main_Owing_balance_deposit_history": "মেইন ব্যালেন্স ওউইং ডিপোজিট হিস্টোরি",
   "cashup_owing_deposit_history": "ক্যাশআপ ওউইং ডিপোজিট হিস্টোরি",

@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
 import useAuth from "../../hook/useAuth";
-import { Avatar, Box, Button, FormControl, IconButton, InputLabel, MenuItem, Select, Stack } from "@mui/material";
+import { Avatar, Box, Button, FormControl, IconButton, InputLabel, MenuItem, Select, Stack, Typography } from "@mui/material";
 import { useState } from "react";
 import CDialog from "../../common/CDialog";
 import EditProfile from "./EditProfile";
 import useUser from "../../hook/useUser";
 import { FaCartArrowDown } from "react-icons/fa6";
-import { SettingsBackupRestore, ShoppingCartCheckout } from "@mui/icons-material";
+import { Check, Clear, SettingsBackupRestore, ShoppingCartCheckout } from "@mui/icons-material";
 import { AiOutlineEdit } from "react-icons/ai";
 import { useTranslation } from "react-i18next";
 
@@ -22,7 +22,7 @@ function Profile() {
 
     i18n.changeLanguage(language); // Change language
   };
-
+  console.log(user)
 
   const { t } = useTranslation('profile')
 
@@ -56,7 +56,7 @@ function Profile() {
             <Stack direction="row" justifyContent="space-between" alignItems="center">
               <select value={i18n.language} onChange={changeLanguage}
                 className="rounded-sm">
-                <option value="bn">Bangla</option>
+                <option value="bn">বাংলা</option>
                 <option value="en">English</option>
               </select>
               <IconButton color="secondary" onClick={() => setProfileEditDialogOpen(true)} variant="contained">
@@ -66,7 +66,14 @@ function Profile() {
 
             <div className="flex flex-col items-center">
               <Avatar sx={{ width: '100px', height: '100px', mb: 2 }} src={user?.buyer_image} />
-              <h1 className="font-semibold text-lg text-white">
+
+              {
+                user?.membership_status ?
+                  <Typography sx={{ bgcolor: '#fff', px: 1, fontSize: '14px', borderRadius: '4px', color: 'purple' }}>Membership<Check /></Typography> :
+                  <Typography sx={{ bgcolor: '#fff', fontSize: '14px', px: 1, borderRadius: '4px', color: 'red' }}>Membership<Clear /></Typography>
+              }
+
+              <h1 className="font-semibold text-lg pt-2 text-white">
                 {user?.name}
               </h1>
               <p className="text-white">{user?.phone_number}</p>
@@ -184,6 +191,18 @@ function Profile() {
               <button className="btn w-full justify-start bg-white border-none shadow-none">
                 <SettingsBackupRestore sx={{ color: '#7F22CE' }} />
                 <p className="text-md">{t('main_Owing_balance_deposit_history')}</p>
+              </button>
+            </Link>
+            <Link to='/cashup-profit-history'>
+              <button className="btn w-full justify-start bg-white border-none shadow-none">
+                <SettingsBackupRestore sx={{ color: '#7F22CE' }} />
+                <p className="text-md">{t('cashup_profit_history')}</p>
+              </button>
+            </Link>
+            <Link to='/cashup-owing-profit-history'>
+              <button className="btn w-full justify-start bg-white border-none shadow-none">
+                <SettingsBackupRestore sx={{ color: '#7F22CE' }} />
+                <p className="text-md">{t('cashup_owing_profit_history')}</p>
               </button>
             </Link>
             <Link to='/main-balance-withdraw-history'>

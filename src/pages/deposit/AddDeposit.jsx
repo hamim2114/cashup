@@ -4,6 +4,7 @@ import toast from 'react-hot-toast';
 import CButton from '../../common/CButton';
 import apiReq from '../../utils/axiosInstance';
 import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from 'react-router-dom';
 
 const AddDeposit = ({ method, closeDialog }) => {
   const [errMsg, setErrMsg] = useState({})
@@ -14,10 +15,13 @@ const AddDeposit = ({ method, closeDialog }) => {
     transaction_id: "",
   });
 
+  const navigate = useNavigate()
+
   const depositMutation = useMutation({
     mutationFn: (input) => apiReq.post('/buyer_transactions/', input),
     onSuccess: (res) => {
       toast.success(" Successfully send Deposit Request ");
+      navigate('/main-balance-deposit-history')
       closeDialog()
     },
     onError: (err) => {

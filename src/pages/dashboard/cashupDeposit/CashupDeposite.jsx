@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Avatar, Box, Card, DialogContent, DialogTitle, Grid, IconButton, Typography } from "@mui/material";
+import { Avatar, Box, Card, DialogActions, DialogContent, DialogTitle, Grid, IconButton, Typography } from "@mui/material";
 
 // Import Images
 import educationImg from "../../../assets/paybill/graduation.png";
@@ -17,6 +17,7 @@ import { useQuery } from "@tanstack/react-query";
 import CashupWithdrawReq from "./cashupWithdrawReq/CashupWithdrawReq";
 import CompoundingWithdraw from "./compoundingWithdraw/CompoundingWithdraw";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 
 const cashupDeposite = [
   { id: 1, titleKey: "cashup_balance", img: educationImg, type: "balance" },
@@ -39,6 +40,10 @@ const CashupDeposite = () => {
     queryKey: ['cashupDeposit'],
     queryFn: () => apiReq.get('/api/cashup-deposit/'),
   });
+  const { data: cashupProfit } = useQuery({
+    queryKey: ['cashupDeposit'],
+    queryFn: () => apiReq.get('/cashup-profit-history/'),
+  });
 
   // Open Dialog
   const handleOpen = (item) => {
@@ -52,7 +57,7 @@ const CashupDeposite = () => {
   };
 
   return (
-    <Box sx={{ bgcolor: "white", py: 5, px: 2 }}>
+    <Box sx={{ bgcolor: "white", pb: 5, px: 2 }}>
       <Typography variant="h6" fontWeight="bold" mb={3}>
         {t("cashup_deposit")} {/* Translate "ক্যাশআপ ডিপোজিট" */}
       </Typography>
@@ -90,12 +95,12 @@ const CashupDeposite = () => {
         {selectedItem?.type === "balance" && <CashupBalance />}
         {
           [
-            { labelKey: 'daily_profit', value: cashupBalance?.data[0]?.daily_profit, key: 'daily_profit' },
-            { labelKey: 'monthly_profit', value: cashupBalance?.data[0]?.monthly_profit, key: 'monthly_profit' },
-            { labelKey: 'compound_profit', value: cashupBalance?.data[0]?.compounding_profit, key: 'compounding_profit' },
-            { labelKey: 'daily_compound', value: cashupBalance?.data[0]?.daily_compounding_profit, key: 'daily_compounding_profit' },
-            { labelKey: 'monthly_compound', value: cashupBalance?.data[0]?.monthly_compounding_profit, key: 'monthly_compounding_profit' },
-            { labelKey: 'product_profit', value: cashupBalance?.data[0]?.product_profit, key: 'product_profit' },
+            { labelKey: 'daily_profit', value: cashupBalance?.data[0]?.daily_profit ?? '0.00', key: 'daily_profit' },
+            { labelKey: 'monthly_profit', value: cashupBalance?.data[0]?.monthly_profit ?? '0.00', key: 'monthly_profit' },
+            { labelKey: 'compound_profit', value: cashupBalance?.data[0]?.compounding_profit ?? '0.00', key: 'compounding_profit' },
+            { labelKey: 'daily_compound', value: cashupBalance?.data[0]?.daily_compounding_profit ?? '0.00', key: 'daily_compounding_profit' },
+            { labelKey: 'monthly_compound', value: cashupBalance?.data[0]?.monthly_compounding_profit ?? '0.00', key: 'monthly_compounding_profit' },
+            { labelKey: 'product_profit', value: cashupBalance?.data[0]?.product_profit ?? '0.00', key: 'product_profit' },
           ]
             ?.filter((item) => selectedItem?.type == item.key)
             ?.map((item, id) => (
@@ -110,6 +115,9 @@ const CashupDeposite = () => {
                 >
                   {item.value} BDT
                 </Typography>
+                <DialogActions>
+                  <Link className="text-blue-500" to='/cashup-profit-history'>See Full History</Link>
+                </DialogActions>
               </Box>
             ))
         }

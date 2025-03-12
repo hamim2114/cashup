@@ -27,7 +27,7 @@ function Header() {
     queryFn: () => apiReq.get('/api/cashup-owing-deposit/')
   })
 
-
+  console.log(cashupOwingDeposit)
   return (
     <>
       <nav className="bg-fuchsia-600 pt-5 pb-10 px-3 ">
@@ -117,7 +117,7 @@ function Header() {
 
       {/* Owing Balance dialog */}
       <CDialog title='Owing / Loan Balance' open={mainOwingBalanceDialogOpen} onClose={() => setMainOwingBalanceDialogOpen(false)} >
-        <Typography sx={{ textAlign: 'center', color: 'green', my: 5 }} variant="h4">{0.00} BDT</Typography>
+        <Typography sx={{ textAlign: 'center', color: 'green', my: 5 }} variant="h4">{cashupOwingDeposit?.data[0]?.cashup_owing_main_balance ?? 0.00} BDT</Typography>
         <Button onClick={() => setMainOwingBalanceReqDialogOpen(true)} variant="contained" style={{ width: '100%' }}>Request For Loan</Button>
       </CDialog>
 

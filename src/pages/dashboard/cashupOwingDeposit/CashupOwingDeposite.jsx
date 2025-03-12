@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Avatar, Box, Card, DialogContent, DialogTitle, Grid, IconButton, Typography } from "@mui/material";
+import { Avatar, Box, Card, DialogActions, DialogContent, DialogTitle, Grid, IconButton, Typography } from "@mui/material";
 
 // Import Images
 import educationImg from "../../../assets/paybill/graduation.png";
@@ -15,6 +15,7 @@ import CashupOwingBalance from "./cashupOwingBalance/CashupOwingBalance";
 import apiReq from "../../../utils/axiosInstance";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 
 const cashupDeposite = [
   { id: 1, titleKey: "owing_loan_balance", img: educationImg, type: "balance" },
@@ -50,7 +51,7 @@ const CashupOwingDeposite = () => {
   };
 
   return (
-    <Box sx={{ bgcolor: "white", py: 5, px: 2 }}>
+    <Box sx={{ bgcolor: "white", pb: 5, px: 2 }}>
       <Typography variant="h6" fontWeight="bold" mb={3}>
         {t('cashup_deposit_owing_loan')}
       </Typography>
@@ -108,6 +109,9 @@ const CashupOwingDeposite = () => {
                 >
                   {item.value} BDT
                 </Typography>
+                <DialogActions>
+                  <Link className="text-blue-500" to='/cashup-owing-profit-history'>See Full History</Link>
+                </DialogActions>
               </Box>
             ))
         }

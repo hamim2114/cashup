@@ -243,7 +243,7 @@ function Dashboard() {
               </div>
 
               {/* bill pay */}
-              <section className="bg-white py-5 -mt-5">
+              <section className="bg-white py-5 mt-5">
                 <div className="mx-2">
                   <h1 className="font-bold text-black text-lg mb-3">{t("bill_pay")}</h1>
                   <div className="grid grid-cols-4 gap-5">
@@ -270,7 +270,7 @@ function Dashboard() {
 
             </Collapse>
 
-            <Stack sx={{ width: '100%' }} onClick={() => setExpandService(!expandService)}>
+            <Stack sx={{ width: '100%', py: 2 }} onClick={() => setExpandService(!expandService)}>
               <Divider sx={{ width: '100%' }} />
               <KeyboardArrowDownOutlined sx={{
                 alignSelf: 'center',
@@ -285,13 +285,11 @@ function Dashboard() {
           </div>
         </section>
 
-        <section className="mb-6">
-          <Slider />
-        </section>
+        <Slider />
 
 
-
-        {/* <section className="bg-white mb-10 py-5 -mt-5">
+        {/* suggestion */}
+        <section className="bg-white pb-10 ">
           <div className="mx-2">
             <h1 className="font-bold text-black text-lg mb-3">{t("suggestion")}</h1>
             <div className="grid grid-cols-4 gap-5">
@@ -314,7 +312,7 @@ function Dashboard() {
               ))}
             </div>
           </div>
-        </section> */}
+        </section>
 
         {/* cashup deposite */}
         <CashupDeposite />
