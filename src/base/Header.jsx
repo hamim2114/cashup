@@ -27,7 +27,6 @@ function Header() {
     queryFn: () => apiReq.get('/api/cashup-owing-deposit/')
   })
 
-  console.log(cashupOwingDeposit)
   return (
     <>
       <nav className="bg-fuchsia-600 pt-5 pb-10 px-3 ">

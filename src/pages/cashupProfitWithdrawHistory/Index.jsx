@@ -6,7 +6,7 @@ import apiReq from '../../utils/axiosInstance';
 import { useQuery } from '@tanstack/react-query';
 import { format } from 'date-fns';
 
-const CashupWithdrawHistory = () => {
+const CashupProfitWithdrawHistory = () => {
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ['withdrawal-from-cashup-deposit'],
@@ -15,7 +15,6 @@ const CashupWithdrawHistory = () => {
 
   const navigate = useNavigate()
 
-  console.log(data)
 
   const columns = [
     {
@@ -58,12 +57,12 @@ const CashupWithdrawHistory = () => {
   return (
     <Box >
       <nav className="bg-[rgb(33,54,68)] py-3">
-        <div className="p-2 flex flex-wrap items-center justify-start gap-10 max-w-screen-xl px-4 mx-auto">
+        <div className="p-2 flex  items-center justify-start gap-10 max-w-screen-xl px-4 mx-auto">
           <div onClick={() => navigate(-1)} style={{ cursor: 'pointer' }}>
             <i className="fa-solid fa-chevron-left text-3xl text-white"></i>
           </div>
 
-          <h1 className="text-2xl font-bold text-white">Cashup Withdraw History</h1>
+          <h1 className="text-2xl font-bold text-white">Cashup Profit Withdraw History</h1>
         </div>
       </nav>
       <Typography mx={2} mt={2} variant='body2'>Total Withdraw ({data?.data?.length})</Typography>
@@ -80,4 +79,4 @@ const CashupWithdrawHistory = () => {
   )
 }
 
-export default CashupWithdrawHistory
+export default CashupProfitWithdrawHistory

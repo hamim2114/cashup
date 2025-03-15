@@ -4,7 +4,9 @@ import { useMutation } from "@tanstack/react-query";
 import {
   TextField, Button, Radio, FormControl, FormControlLabel,
   FormLabel, RadioGroup, Paper, Typography, Box, Avatar,
-  IconButton
+  IconButton,
+  Stack,
+  CardActions
 } from "@mui/material";
 import authLogo from "../../assets/logo.png";
 import apiReq from "../../utils/axiosInstance";
@@ -51,7 +53,7 @@ function Login() {
 
 
   return (
-    <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh" bgcolor="grey.100">
+    <Stack justifyContent="center" alignItems="center" minHeight="100vh" bgcolor="grey.100">
       <Paper elevation={3} sx={{ p: 4, maxWidth: 400, width: "100%", textAlign: "center" }}>
         <Avatar src={authLogo} sx={{ width: 250, borderRadius: 0, height: 100, mx: "auto", mb: 6 }} />
         <form onSubmit={handleSubmit}>
@@ -88,12 +90,17 @@ function Login() {
             Login
           </CButton>
         </form>
+        <CardActions>
+          <Link to='/forgot-password'>
+            <Button >Forgot Password ?</Button>
+          </Link>
+        </CardActions>
         <Typography variant="body2" sx={{ mt: 2 }}>
           Not registered yet?
         </Typography>
         <Link style={{ color: 'blue' }} to="/register">Register Now</Link>
       </Paper>
-    </Box>
+    </Stack>
   );
 }
 

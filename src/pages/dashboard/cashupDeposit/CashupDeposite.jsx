@@ -14,7 +14,7 @@ import CDialog from "../../../common/CDialog";
 import CashupBalance from "./cashupBalance/CashupBalance";
 import apiReq from "../../../utils/axiosInstance";
 import { useQuery } from "@tanstack/react-query";
-import CashupWithdrawReq from "./cashupWithdrawReq/CashupWithdrawReq";
+import ProfitWithdraw from "./profitWithdraw/ProfitWithdraw";
 import CompoundingWithdraw from "./compoundingWithdraw/CompoundingWithdraw";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
@@ -27,8 +27,8 @@ const cashupDeposite = [
   { id: 5, titleKey: "daily_compound", img: vatImg, type: "daily_compounding_profit" },
   { id: 6, titleKey: "monthly_compound", img: internetImg, type: "monthly_compounding_profit" },
   { id: 7, titleKey: "product_profit", img: cableTv, type: "product_profit" },
-  { id: 8, titleKey: "cashup_withdraw", img: insuranceImg, type: "cashup_withdraw" },
   { id: 9, titleKey: "compound_withdraw", img: insuranceImg, type: "compounding_withdraw" },
+  { id: 8, titleKey: "profit_withdraw", img: insuranceImg, type: "profit_withdraw" },
 ];
 
 const CashupDeposite = () => {
@@ -57,15 +57,15 @@ const CashupDeposite = () => {
   };
 
   return (
-    <Box sx={{ bgcolor: "white", pb: 5, px: 2 }}>
+    <Box sx={{ bgcolor: "white", pb: 10, px: 2 }}>
       <Typography variant="h6" fontWeight="bold" mb={3}>
         {t("cashup_deposit")} {/* Translate "ক্যাশআপ ডিপোজিট" */}
       </Typography>
 
       {/* Grid Layout */}
       <Grid container spacing={2}>
-        {cashupDeposite.map((service) => (
-          <Grid item xs={6} sm={6} md={6} key={service.id}>
+        {cashupDeposite.map((service, index) => (
+          <Grid item xs={index === cashupDeposite?.length - 1 ? 12 : 6} key={service.id}>
             <Card
               sx={{
                 display: "flex",
@@ -73,8 +73,8 @@ const CashupDeposite = () => {
                 alignItems: "center",
                 p: 2,
                 cursor: "pointer",
-                boxShadow: 3,
-                border: '1px solid green',
+                boxShadow: 2,
+                // border: '1px solid green',
                 borderRadius: 2,
                 "&:hover": { boxShadow: 6 },
               }}
@@ -95,12 +95,14 @@ const CashupDeposite = () => {
         {selectedItem?.type === "balance" && <CashupBalance />}
         {
           [
-            { labelKey: 'daily_profit', value: cashupBalance?.data[0]?.daily_profit ?? '0.00', key: 'daily_profit' },
-            { labelKey: 'monthly_profit', value: cashupBalance?.data[0]?.monthly_profit ?? '0.00', key: 'monthly_profit' },
-            { labelKey: 'compound_profit', value: cashupBalance?.data[0]?.compounding_profit ?? '0.00', key: 'compounding_profit' },
-            { labelKey: 'daily_compound', value: cashupBalance?.data[0]?.daily_compounding_profit ?? '0.00', key: 'daily_compounding_profit' },
-            { labelKey: 'monthly_compound', value: cashupBalance?.data[0]?.monthly_compounding_profit ?? '0.00', key: 'monthly_compounding_profit' },
-            { labelKey: 'product_profit', value: cashupBalance?.data[0]?.product_profit ?? '0.00', key: 'product_profit' },
+            {
+              labelKey: 'daily_profit', value: cashupBalance?.data[0]?.daily_profit ?? '0.00', key: 'daily_profit', link: '/cashup-profit-history'
+            },
+            { labelKey: 'monthly_profit', value: cashupBalance?.data[0]?.monthly_profit ?? '0.00', key: 'monthly_profit', link: '/cashup-profit-history' },
+            { labelKey: 'compound_profit', value: cashupBalance?.data[0]?.compounding_profit ?? '0.00', key: 'compounding_profit', link: '/compounding-profit-history' },
+            { labelKey: 'daily_compound', value: cashupBalance?.data[0]?.daily_compounding_profit ?? '0.00', key: 'daily_compounding_profit', link: '/compounding-profit-history' },
+            { labelKey: 'monthly_compound', value: cashupBalance?.data[0]?.monthly_compounding_profit ?? '0.00', key: 'monthly_compounding_profit', link: '/compounding-profit-history' },
+            { labelKey: 'product_profit', value: cashupBalance?.data[0]?.product_profit ?? '0.00', key: 'product_profit', link: '/cashup-profit-history' },
           ]
             ?.filter((item) => selectedItem?.type == item.key)
             ?.map((item, id) => (
@@ -116,13 +118,13 @@ const CashupDeposite = () => {
                   {item.value} BDT
                 </Typography>
                 <DialogActions>
-                  <Link className="text-blue-500" to='/cashup-profit-history'>See Full History</Link>
+                  <Link className="text-blue-500" to={item.link}>See Full History</Link>
                 </DialogActions>
               </Box>
             ))
         }
 
-        {selectedItem?.type === "cashup_withdraw" && <CashupWithdrawReq cashupBalance={cashupBalance} />}
+        {selectedItem?.type === "profit_withdraw" && <ProfitWithdraw cashupBalance={cashupBalance} />}
         {selectedItem?.type === "compounding_withdraw" && <CompoundingWithdraw cashupBalance={cashupBalance} />}
       </CDialog>
     </Box>

@@ -12,7 +12,6 @@ import toast from "react-hot-toast";
 import CButton from "../../common/CButton";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
-
 function Register() {
   const [showPassword, setShowPassword] = useState(false);
 
@@ -23,21 +22,17 @@ function Register() {
     gender: "M",
     password: "",
     confirm_password: "",
+    referral_code: ""
   });
   const [errorMessages, setErrorMessages] = useState({}); // Store error messages
 
-  const navigate = useNavigate()
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-    setErrorMessages((prev) => ({ ...prev, [e.target.name]: "" })); // Clear error on input change
-  };
+  const navigate = useNavigate();
 
   const regMutation = useMutation({
     mutationFn: (input) => apiReq.post('/api/register/', input),
     onSuccess: (res) => {
-      console.log(res)
-      toast.success("Registration Successfull");
+      console.log(res);
+      toast.success("Registration Successful");
       setErrorMessages({});
       setFormData({
         phone_number: "",
@@ -45,8 +40,9 @@ function Register() {
         date_of_birth: "",
         password: "",
         confirm_password: "",
+        referral_code: ""
       });
-      navigate('/login')
+      navigate('/login');
     },
     onError: (err) => {
       console.log("Register Error:", err);
@@ -59,8 +55,31 @@ function Register() {
     },
   });
 
+  const validatePhoneNumber = (phone) => {
+    const regex = /^0\d{10}$/;
+    return regex.test(phone);
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    if (name === "phone_number") {
+      if (!validatePhoneNumber(value)) {
+        setErrorMessages((prev) => ({ ...prev, phone_number: ["Please type valid Phone number"] }));
+      } else {
+        setErrorMessages((prev) => ({ ...prev, phone_number: "" }));
+      }
+    }
+    setFormData({ ...formData, [name]: value });
+  };
+
+
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!validatePhoneNumber(formData.phone_number)) {
+      toast.error("Please enter a valid phone number.");
+      return;
+    }
     if (formData.password !== formData.confirm_password) {
       setErrorMessages((prev) => ({ ...prev, confirm_password: "Passwords do not match" }));
       return;
@@ -80,11 +99,13 @@ function Register() {
         <form onSubmit={handleSubmit}>
           <TextField
             fullWidth
+            type="number"
             margin="normal"
             label="Phone Number"
             name="phone_number"
             value={formData.phone_number}
-            onChange={handleChange} required
+            onChange={handleChange}
+            required
             error={!!errorMessages.phone_number}
             helperText={errorMessages.phone_number?.[0] || ""}
           />
@@ -109,7 +130,14 @@ function Register() {
             name="date_of_birth"
             value={formData.date_of_birth}
             onChange={handleChange}
-            InputLabelProps={{ shrink: true }}
+            slotProps={{
+              inputLabel: {
+                shrink: true
+              },
+              htmlInput: {
+                max: "2007-12-31"
+              }
+            }}
             required
             error={!!errorMessages.date_of_birth}
             helperText={errorMessages.date_of_birth?.[0] || ""}
@@ -121,31 +149,12 @@ function Register() {
               <FormControlLabel value="F" control={<Radio />} label="Female" />
               <FormControlLabel value="O" control={<Radio />} label="Other" />
             </RadioGroup>
-
           </FormControl>
 
-          {/* <TextField
-            fullWidth
-            margin="normal"
-            label="Refer Code (if available)"
-            name="referCode"
-            value={formData.referCode}
-            onChange={handleChange}
-          /> */}
           <TextField
-            // slotProps={{
-            //   input: {
-            //     endAdornment: (
-            //       <IconButton onClick={() => setShowPassword(!showPassword)}>
-            //         {showPassword ? <VisibilityOff /> : <Visibility />}
-            //       </IconButton>
-            //     ),
-            //   },
-            // }}
             fullWidth
             margin="normal"
             type='number'
-            // type={showPassword ? 'number' : 'password'}
             label="Pin Code"
             name="password"
             value={formData.password}
@@ -153,25 +162,11 @@ function Register() {
             required
             error={!!errorMessages.password}
             helperText={errorMessages.password?.[0] || ""}
-          // inputProps={{
-          //   inputMode: "numeric", // Show numeric keyboard on mobile devices
-          //   pattern: "[0-9]*", // Restrict input to numbers only
-          // }}
           />
           <TextField
-            // slotProps={{
-            //   input: {
-            //     endAdornment: (
-            //       <IconButton onClick={() => setShowPassword(!showPassword)}>
-            //         {showPassword ? <VisibilityOff /> : <Visibility />}
-            //       </IconButton>
-            //     ),
-            //   },
-            // }}
             fullWidth
             margin="normal"
             type='number'
-            // type={showPassword ? 'number' : 'password'}
             label="Confirm Pin Code"
             name="confirm_password"
             value={formData.confirm_password}
@@ -179,6 +174,16 @@ function Register() {
             required
             error={!!errorMessages.confirm_password}
             helperText={errorMessages.confirm_password || ""}
+          />
+          <TextField
+            fullWidth
+            margin="normal"
+            label="Have Refer Code?"
+            name="referral_code"
+            value={formData.referral_code}
+            onChange={handleChange}
+            error={!!errorMessages.referral_code}
+            helperText={errorMessages.referral_code?.[0] || ""}
           />
 
           <CButton loading={regMutation.isPending} type="submit" variant="contained" color="primary" fullWidth sx={{ mt: 2 }}>

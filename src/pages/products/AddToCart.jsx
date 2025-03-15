@@ -74,14 +74,18 @@ const AddToCart = ({ product, onClose }) => {
               <Box sx={{ border: '1px solid purple', p: 1, borderRadius: '8px', width: 'fit-content' }} flex={1}>
                 <Typography sx={{ fontSize: '12px', color: 'purple', lineHeight: '13px', mb: 1 }}>Congratulation! you got membership price.</Typography>
                 <Typography sx={{ color: 'purple' }} fontSize={14}>
-                  Member: ৳ {product.members_price}
+                  Member: ৳ {product?.members_price}
                 </Typography>
               </Box> :
               <Typography sx={{ color: 'purple', fontWeight: 600 }} fontSize={14}>
-                Member: ৳ {product.members_price}
+                Member: ৳ {product?.members_price}
               </Typography>
           }
         </Stack>
+        <Typography mb={2}>Total Price: {
+          user?.membership_status ? (product?.members_price * productData.quantity) :
+            (product?.discount_price * productData.quantity)
+        } BDT</Typography>
         <Stack direction='row' alignItems={'center'} gap={2}>
           <Stack direction='row' alignItems={'center'} gap={1}>
             <IconButton onClick={() => handleQuantity('remove')} sx={{ width: '20px', height: '20px' }}>

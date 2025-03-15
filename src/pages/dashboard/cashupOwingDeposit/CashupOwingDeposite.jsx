@@ -67,9 +67,9 @@ const CashupOwingDeposite = () => {
                 alignItems: "center",
                 p: 2,
                 cursor: "pointer",
-                boxShadow: 3,
-                border: '1px solid coral',
-                borderRadius: 2,
+                // boxShadow: 3,
+                // border: '1px solid coral',
+                borderRadius: '50%',
                 "&:hover": { boxShadow: 6 },
               }}
               onClick={() => handleOpen(service)}

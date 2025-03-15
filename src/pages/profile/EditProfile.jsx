@@ -7,10 +7,13 @@ import useUser from '../../hook/useUser'
 import apiReq from '../../utils/axiosInstance'
 import { uploadFile } from '../../utils/uploadFile'
 import { deleteFile } from '../../utils/deleteFile'
+import CDialog from '../../common/CDialog'
+import ChangePassword from './ChangePassword'
 
 const EditProfile = ({ onClose }) => {
   const [file, setFile] = useState('')
   const [fileUploading, setFileUploading] = useState(false)
+  const [changePassDialogOpen, setChangePassDialogOpen] = useState(false)
   const [formData, setFormData] = useState({
     name: "",
     phone_number: "",
@@ -131,6 +134,12 @@ const EditProfile = ({ onClose }) => {
 
         <CButton type='submit' loading={editProfileMutation.isPending || fileUploading} variant="contained" color="primary">Update</CButton>
       </form>
+
+      <Button onClick={() => setChangePassDialogOpen(true)} sx={{ alignSelf: 'start' }} size='small'>Change Password</Button>
+
+      <CDialog title='Change Password' open={changePassDialogOpen} onClose={() => setChangePassDialogOpen(false)} >
+        <ChangePassword onclose={() => setChangePassDialogOpen(false)} />
+      </CDialog>
 
     </Stack>
   )

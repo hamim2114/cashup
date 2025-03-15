@@ -42,8 +42,9 @@ import CashupOwingDeposite from "./cashupOwingDeposit/CashupOwingDeposite";
 import { useTranslation } from "react-i18next";
 import Slider from "../../components/Slider";
 import { useState } from "react";
-import { Box, Collapse, Divider, Stack } from "@mui/material";
+import { Box, Collapse, Divider, Stack, Typography } from "@mui/material";
 import { KeyboardArrowDownOutlined } from "@mui/icons-material";
+import SponsoredBy from "./sponsoredBy/SponsoredBy";
 
 const services = [
   {
@@ -320,9 +321,9 @@ function Dashboard() {
         {/* cashup owing deposite */}
         <CashupOwingDeposite />
 
-        <section className="mx-2">
+        {/* <section className="mx-2">
           <div className="max-w-7xl mx-auto">
-            {/* <div className="bg-[rgb(33,54,68)] py-2 text-white   flex items-center justify-start gap-10  rounded-md">
+            <div className="bg-[rgb(33,54,68)] py-2 text-white   flex items-center justify-start gap-10  rounded-md">
               <div className="bg-[rgb(33,54,68)] z-10">
                 <i className="px-3  text-2xl  fa-solid fa-bell bell-animation"></i>
               </div>
@@ -336,7 +337,7 @@ function Dashboard() {
                   )
                 </h1>
               </div>
-            </div> */}
+            </div>
             <div className=" border border-black mt-5 rounded-md">
               <h1 className="p-3 text-[rgb(33,54,68)] text-xl font-bold">
                 Cashup
@@ -491,9 +492,9 @@ function Dashboard() {
               </div>
             </div>
           </div>
-        </section>
+        </section> */}
 
-        <section className="mx-2">
+        {/* <section className="mx-2">
           <div className="max-w-7xl mx-auto">
             <div className=" border border-black mt-5 rounded-md">
               <h1 className="p-3 text--[rgb(33,54,68)] text-xl font-bold">
@@ -507,9 +508,9 @@ function Dashboard() {
               </div>
             </div>
           </div>
-        </section>
+        </section> */}
 
-        <section className="mx-2 mb-10">
+        {/* <section className="mx-2 mb-10">
           <div className="max-w-7xl mx-auto">
             <div className=" border border-black mt-5 rounded-md">
               <h1 className="p-3 text-[rgb(33,54,68)] text-xl font-bold">
@@ -518,7 +519,7 @@ function Dashboard() {
               <hr className="border-b-1 border-black" />
               <div className="container mx-auto mt-2 max-w-7xl">
                 <div className="py-3 grid grid-cols-4 sm:grid-cols-4 md:grid-cols-4 gap-4">
-                  {/* <a
+                  <a
                     href="#"
                     className="flex flex-col items-center text-center"
                   >
@@ -530,7 +531,7 @@ function Dashboard() {
                         Setting
                       </p>
                     </div>
-                  </a> */}
+                  </a>
 
                   <a
                     href="#"
@@ -592,9 +593,9 @@ function Dashboard() {
               </div>
             </div>
           </div>
-        </section>
+        </section> */}
 
-        <section className="mx-2 mb-20">
+        {/* <section className="mx-2 mb-20">
           <div className="max-w-7xl mx-auto border border-black mt-5 rounded-md">
             <h1 className="p-3 text-[rgb(33,54,68)] text-xl font-bold">
               Our Partner
@@ -602,7 +603,17 @@ function Dashboard() {
             <hr className="border-b-1 border-black" />
             <div className="grid grid-cols-4 py-3 gap-2"></div>
           </div>
-        </section>
+        </section> */}
+
+        <SponsoredBy />
+
+        {/* <Box mb={15} mx={2}>
+          <Typography variant="h6" textAlign='center' fontWeight="bold" mb={3}>
+            Contact
+          </Typography>
+          <Typography mb={1}>Office Address: <b>Gulshan 324, dhaka</b> </Typography>
+          <Typography>Contact : <b>+880273723626</b> </Typography>
+        </Box> */}
 
         <Footer />
       </main>

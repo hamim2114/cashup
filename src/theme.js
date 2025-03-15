@@ -31,22 +31,9 @@ export const theme = createTheme({
 
   // typography: {
   //   fontFamily: [
-  //     'Roboto',
   //     'Noto Serif Bengali',
+  //     'Roboto',
   //   ].join(','),
-  //   h4: {
-  //     fontSize: '30px',
-  //     fontWeight: 600,
-  //     lineHeight: 1.3,
-  //   },
-  //   h5: {
-  //     fontSize: '25px',
-  //     fontWeight: 600,
-  //     lineHeight: 1.3,
-  //   },
-  //   body: {
-  //     color: '#475467'
-  //   }
   // },
   breakpoints: {
     values: {

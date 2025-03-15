@@ -36,7 +36,7 @@ const CashupOwingBalance = () => {
 
   const handleInput = (e) => {
     const value = e.target.value;
-    if (value > 0) {
+    if (value >= 0) {
       setAmount(value)
     }
   }

@@ -187,6 +187,12 @@ function Profile() {
                 <p className="text-md">{t('main_balance_deposit_history')}</p>
               </button>
             </Link>
+            <Link to='/main-balance-withdraw-history'>
+              <button className="btn w-full justify-start bg-white border-none shadow-none">
+                <SettingsBackupRestore sx={{ color: '#7F22CE' }} />
+                <p className="text-md">{t('main_balance_withdraw_history')}</p>
+              </button>
+            </Link>
             <Link to='/main-owing-balance-deposit-history'>
               <button className="btn w-full justify-start bg-white border-none shadow-none">
                 <SettingsBackupRestore sx={{ color: '#7F22CE' }} />
@@ -199,22 +205,24 @@ function Profile() {
                 <p className="text-md">{t('cashup_profit_history')}</p>
               </button>
             </Link>
+            <Link to='/cashup-profit-withdraw-history'>
+              <button className="btn w-full justify-start bg-white border-none shadow-none">
+                <SettingsBackupRestore sx={{ color: '#7F22CE' }} />
+                <p className="text-md">{t('cashup_profit_withdraw_history')}</p>
+              </button>
+            </Link>
             <Link to='/cashup-owing-profit-history'>
               <button className="btn w-full justify-start bg-white border-none shadow-none">
                 <SettingsBackupRestore sx={{ color: '#7F22CE' }} />
                 <p className="text-md">{t('cashup_owing_profit_history')}</p>
               </button>
             </Link>
-            <Link to='/main-balance-withdraw-history'>
+
+
+            <Link to='/compounding-profit-history'>
               <button className="btn w-full justify-start bg-white border-none shadow-none">
                 <SettingsBackupRestore sx={{ color: '#7F22CE' }} />
-                <p className="text-md">{t('main_balance_withdraw_history')}</p>
-              </button>
-            </Link>
-            <Link to='/cashup-withdraw-history'>
-              <button className="btn w-full justify-start bg-white border-none shadow-none">
-                <SettingsBackupRestore sx={{ color: '#7F22CE' }} />
-                <p className="text-md">{t('cashup_withdraw_history')}</p>
+                <p className="text-md">{t('compounding_profit_history')}</p>
               </button>
             </Link>
             <Link to='/compounding-withdraw-history'>
@@ -226,37 +234,41 @@ function Profile() {
           </div>
           <div className="divider"></div>
           <div className="shadow-lg pb-3">
-            <button className="btn w-full justify-start bg-white border-none">
-              <svg
-                stroke="currentColor"
-                fill="currentColor"
-                strokeWidth="0"
-                viewBox="0 0 24 24"
-                className="text-xl text-purple-700"
-                height="1em"
-                width="1em"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"></path>
-                <path d="M11 11h2v6h-2zm0-4h2v2h-2z"></path>
-              </svg>
-              <p className="text-md">{t('about_us')}</p>
-            </button>
-            <button className="btn w-full justify-start bg-white border-none">
-              <svg
-                stroke="currentColor"
-                fill="currentColor"
-                strokeWidth="0"
-                viewBox="0 0 512 512"
-                className="text-xl text-purple-700"
-                height="1em"
-                width="1em"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path d="M426.666 330.667a250.385 250.385 0 0 1-75.729-11.729c-7.469-2.136-16-1.073-21.332 5.333l-46.939 46.928c-60.802-30.928-109.864-80-140.802-140.803l46.939-46.927c5.332-5.333 7.462-13.864 5.332-21.333-8.537-24.531-12.802-50.136-12.802-76.803C181.333 73.604 171.734 64 160 64H85.333C73.599 64 64 73.604 64 85.333 64 285.864 226.136 448 426.666 448c11.73 0 21.334-9.604 21.334-21.333V352c0-11.729-9.604-21.333-21.334-21.333z"></path>
-              </svg>
-              <p className="text-md">{t('contact')}</p>
-            </button>
+            <Link to='/about-us'>
+              <button className="btn w-full justify-start bg-white border-none">
+                <svg
+                  stroke="currentColor"
+                  fill="currentColor"
+                  strokeWidth="0"
+                  viewBox="0 0 24 24"
+                  className="text-xl text-purple-700"
+                  height="1em"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"></path>
+                  <path d="M11 11h2v6h-2zm0-4h2v2h-2z"></path>
+                </svg>
+                <p className="text-md">{t('about_us')}</p>
+              </button>
+            </Link>
+            <Link to='/contact'>
+              <button className="btn w-full justify-start bg-white border-none">
+                <svg
+                  stroke="currentColor"
+                  fill="currentColor"
+                  strokeWidth="0"
+                  viewBox="0 0 512 512"
+                  className="text-xl text-purple-700"
+                  height="1em"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M426.666 330.667a250.385 250.385 0 0 1-75.729-11.729c-7.469-2.136-16-1.073-21.332 5.333l-46.939 46.928c-60.802-30.928-109.864-80-140.802-140.803l46.939-46.927c5.332-5.333 7.462-13.864 5.332-21.333-8.537-24.531-12.802-50.136-12.802-76.803C181.333 73.604 171.734 64 160 64H85.333C73.599 64 64 73.604 64 85.333 64 285.864 226.136 448 426.666 448c11.73 0 21.334-9.604 21.334-21.333V352c0-11.729-9.604-21.333-21.334-21.333z"></path>
+                </svg>
+                <p className="text-md">{t('contact')}</p>
+              </button>
+            </Link>
             <button className="btn w-full justify-start bg-white border-none">
               <svg
                 stroke="currentColor"
